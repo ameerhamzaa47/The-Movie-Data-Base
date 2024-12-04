@@ -4,6 +4,10 @@ import Header from './Component/Header'
 import Layout from './Component/Layout'
 import Register from './Component/Register'
 import Login from './Component/Login'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import Protected from './Component/Protected'
+import Home from './Component/Home'
 
 function App() {
 
@@ -13,10 +17,11 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
+        <Route path='/' element={<Protected cmp={Home}/>} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
     </Layout>
     </>

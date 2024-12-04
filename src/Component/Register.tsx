@@ -1,10 +1,51 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import { CheckIcon } from '@heroicons/react/16/solid'
+import { auth, db, createUserWithEmailAndPassword, setDoc, doc } from './Firebase';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+const schema = yup.object().shape({
+  UserName: yup.string().required('Username is required'),
+  Password: yup.string()
+    .min(4, 'Password must be at least 4 characters')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
+    .required('Password is required'),
+  ConfirmPassword: yup.string()
+    .oneOf([yup.ref('Password'), undefined], 'Passwords must match')
+    .required('Confirm Password is required'),
+  Email: yup.string().email('Invalid email format').required('Email is required')
+});
 
 const Register: FC = () => {
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data: any): void => console.log(data);
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+  const Navigate = useNavigate();
+  const onSubmit = async (data: any) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, data.Email, data.Password);
+      const user = userCredential.user;
+
+      // Add user information to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        username: data.UserName,
+        email: data.Email,
+        password: data.Password,
+        createdAt: new Date(),
+      });
+
+      Navigate('/login');
+      toast.success("Account created successfully. Please log in.");
+
+    } catch (error) {
+      console.error("Error signing up:", error);
+      toast.error('Email already in use');
+    }
+  };
   return (
     <>
       <main className='flex flex-col md:flex-row justify-between mx-10 mt-5'>
@@ -73,19 +114,23 @@ const Register: FC = () => {
           <form className='mt-5' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col my-2'>
               <label className='font-semibold'>Username</label>
-              <input {...register("UserName", { required: 'name is required' })} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter UserName...' />
+              <input {...register("UserName")} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter UserName...' />
+              {errors.UserName && <p className='text-red-500'>{errors.UserName.message}</p>}
             </div>
             <div className='flex flex-col my-2'>
               <label className='font-semibold'>Password (4 characters minimum)</label>
-              <input {...register("Password", { required: true })} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Password...' />
+              <input type='password' {...register("Password")} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Password...' />
+              {errors.Password && <p className='text-red-500'>{errors.Password.message}</p>}
             </div>
             <div className='flex flex-col my-2'>
               <label className='font-semibold'>Password Confirm</label>
-              <input {...register("ConfirmPassword", { required: true })} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Confirm Password' />
+              <input type='password' {...register("ConfirmPassword")} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Confirm Password' />
+              {errors.ConfirmPassword && <p className='text-red-500'>{errors.ConfirmPassword.message}</p>}
             </div>
             <div className='flex flex-col my-2'>
               <label className='font-semibold'>Email</label>
-              <input {...register("Email", { required: true })} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Email...' />
+              <input {...register("Email")} className='border border-gray-300 p-2  rounded-md h-10 my-2' placeholder='Enter Email...' />
+              {errors.Email && <p className='text-red-500'>{errors.Email.message}</p>}
             </div>
             <div className='mt-5'>
               <p>By clicking the "Sign up" button below, I certify that I have read and agree to the terms of use and privacy policy.</p>
