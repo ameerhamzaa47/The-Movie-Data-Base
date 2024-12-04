@@ -7,6 +7,8 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { PlusIcon } from '@heroicons/react/16/solid';
+import ThemeToggle from './ThemeToggle';
 
 const Header: FC = () => {
   const [open, setOpen] = useState(false);
@@ -18,12 +20,12 @@ const Header: FC = () => {
   const [user] = useAuthState(auth);
   const Navigate = useNavigate();
 
-  useEffect(()=>{
-    if(user){
+  useEffect(() => {
+    if (user) {
       Navigate('/');
     }
-  },[user, Navigate])
- 
+  }, [user, Navigate])
+
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -147,34 +149,44 @@ const Header: FC = () => {
 
       <div >
 
-          {user ? 
-           <div className="dropdown dropdown-end" onClick={()=>setOpen(!open)}>
+        {user ?
+        <div className='flex gap-3 text-white'>
+
+          <div className="btn btn-ghost btn-circle">
+              <PlusIcon className='w-6' />
+          </div>
+
+          
+          <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-             <div className="w-10 rounded-full">
-               <img
-                 alt="Tailwind CSS Navbar component"
-                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-             </div>
-           </div>
-           <ul
-             tabIndex={0}
-             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-             <li>
-               <a className="justify-between">
-               {username ? username : "Guest"}
-                 <span className="badge">New</span>
-               </a>
-             </li>
-             <li><a>Settings</a></li>
-             <li><a onClick={handleLogout}>Logout</a></li>
-           </ul>
-         </div>
-         :<ul className='flex text-white font-semibold mx-0 md:mx-10'>
-         <li><Link className='mx-2 md:mx-4' to={'/login'}>Login</Link></li>
-         <li><Link className='mx-2 md:mx-4' to={'/register'}>Join</Link></li>
-       </ul>
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <li>
+                <a className="justify-between">
+                  {username ? username : "Guest"}
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li><a>Settings</a></li>
+              <li><a onClick={handleLogout}>Logout</a></li>
+            </ul>
+          </div>
+          </div>
+          : <ul className='flex text-white font-semibold mx-0 md:mx-10'>
+            <li><Link className='mx-0 md:mx-4' to={'/login'}>Login</Link></li>
+            <li><Link className='mx-2 md:mx-4' to={'/register'}>Join</Link></li>
+          </ul>
         }
-       
+        <div className='flex items-center mx-5 text-white'>
+            <ThemeToggle/>
+          </div>
       </div>
     </header>
   )

@@ -39,7 +39,7 @@ const Login: FC = () => {
         <h1 className='text-2xl font-semibold'>Login to your account</h1>
         <p className='mt-2 text-justify'>
           In order to use the editing and rating capabilities of THE CINEMANIA, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple.
-          <Link className='text-cyan-500 font-medium hover:underline' to={'/register'}>Click here</Link> to get started.
+          <Link className='text-cyan-500 font-medium hover:underline' to={'/register'}> Click here</Link> to get started.
         </p>
 
         <form className='mt-5' onSubmit={handleSubmit(onSubmit)}>
@@ -66,13 +66,13 @@ const Login: FC = () => {
           </div>
 
           <div className='flex justify-end'>
-            <button className='bg-zinc-200 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
+            <button className='bg-zinc-200 dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
               Login
             </button>
           </div>
         </form>
       </div>
-    </>
+      </>
   );
 };
 

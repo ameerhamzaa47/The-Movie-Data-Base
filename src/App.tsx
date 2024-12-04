@@ -8,11 +8,13 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Protected from './Component/Protected'
 import Home from './Component/Home'
+import { ThemeProvider } from './Context/ThemeProvider'
 
 function App() {
 
   return (
     <>
+    <ThemeProvider>
     <Layout>
     <BrowserRouter>
       <Header/>
@@ -24,6 +26,7 @@ function App() {
       <ToastContainer />
     </BrowserRouter>
     </Layout>
+    </ThemeProvider>
     </>
   )
 }
