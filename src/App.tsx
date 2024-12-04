@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Protected from './Component/Protected'
 import Home from './Component/Home'
 import { ThemeProvider } from './Context/ThemeProvider'
+import { motion } from "framer-motion";
+
 
 function App() {
 

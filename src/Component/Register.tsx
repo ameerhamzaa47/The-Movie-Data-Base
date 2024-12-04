@@ -95,7 +95,7 @@ const Register: FC = () => {
 
   return (
     <>
-      <div className='dark:bg-gray-800 dark:text-white'>
+      {/* <div className='dark:bg-gray-800 dark:text-white'> */}
       <main className='flex flex-col md:flex-row justify-between mx-10'>
 
 <section className='w-full md:w-1/4 shadow-lg mt-5 dark:bg-cyan-700'>
@@ -215,7 +215,7 @@ const Register: FC = () => {
 </section>
 
 </main>
-      </div>
+      {/* </div> */}
     </>
   )
 }
