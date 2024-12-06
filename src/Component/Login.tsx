@@ -35,10 +35,10 @@ const Login: FC = () => {
 
   return (
     <>
-      <div className='p-10'>
-        <h1 className='text-2xl font-semibold'>Login to your account</h1>
-        <p className='mt-2 text-justify'>
-          In order to use the editing and rating capabilities of THE CINEMANIA, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple.
+      <div className='p-10 flex flex-col items-center'>
+        <h1 className='text-2xl font-semibold dark:text-cyan-400'>Login to your account</h1>
+        <p className='mt-3  text-center w-96 md:w-1/3'>
+          If you do not have an account, registering for an account is free and simple.
           <Link className='text-cyan-500 font-medium hover:underline' to={'/register'}> Click here</Link> to get started.
         </p>
 
@@ -47,29 +47,27 @@ const Login: FC = () => {
             <label className='font-semibold'>Email</label>
             <input
               {...register("Email")}
-              className='border border-gray-300 p-2 rounded-md h-10 my-2'
+              className='border border-gray-300 dark:text-black p-2 rounded-md h-10 w-96 my-2'
               placeholder='Enter Email...'
               type="email"
             />
             {errors.Email && <p className='text-red-500'>{errors.Email.message}</p>}
-          </div>
+            </div>
 
           <div className='flex flex-col my-2'>
             <label className='font-semibold'>Password</label>
             <input
               {...register("Password")}
-              className='border border-gray-300 p-2 rounded-md h-10 my-2'
+              className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
               placeholder='Enter Password...'
               type="password"
             />
             {errors.Password && <p className='text-red-500'>{errors.Password.message}</p>}
           </div>
 
-          <div className='flex justify-end'>
-            <button className='bg-zinc-200 dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
+            <button className='bg-zinc-200 w-full dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
               Login
             </button>
-          </div>
         </form>
       </div>
       </>

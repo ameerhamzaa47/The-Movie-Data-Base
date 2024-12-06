@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from 'react'
 import logo from '../assets/image/Logo.png'
+import Add from '../assets/image/AddMovies.png'
 import { Link } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from './Firebase';
@@ -7,7 +8,7 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { PlusIcon } from '@heroicons/react/16/solid';
+// import { PlusIcon } from '@heroicons/react/16/solid';
 import ThemeToggle from './ThemeToggle';
 
 const Header: FC = () => {
@@ -153,7 +154,8 @@ const Header: FC = () => {
         <div className='flex gap-3 text-white'>
 
           <div className="btn btn-ghost btn-circle">
-              <PlusIcon className='w-6' />
+              {/* <PlusIcon className='w-6' /> */}
+              <img src={Add} className='w-6' alt="" />
           </div>
 
           
