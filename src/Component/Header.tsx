@@ -66,14 +66,14 @@ const Header: FC = () => {
         {/* Mobile View */}
 
         <div className="flex md:hidden">
-          <button className="btn btn-ghost text-white relative right-56" onClick={() => setOpen(!open)}>
+          <button className="btn btn-ghost text-white relative right-56 z-20" onClick={() => setOpen(!open)}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
           </button>
 
           {open && (
-            <div className="absolute top-12 left-0 w-full bg-white mt-5 shadow-lg">
+            <div className="absolute top-12 left-0 w-full bg-white mt-4 dark:bg-gradient-to-r dark:from-teal-700 dark:to-cyan-800 shadow-lg z-30">
               <ul className="menu p-2">
                 <li>
                   <a onClick={() => setSubmenuMovies(!submenuMovies)}>Movies</a>
