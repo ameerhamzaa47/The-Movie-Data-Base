@@ -12,7 +12,7 @@ import Sliderbg from '../assets/image/Slider Bg.png'
 
 const MovieCard: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  // const [tvShows, setTVShows] = useState<TVShow[]>([]);
+  const [tvShows, setTVShows] = useState<TVShow[]>([]);
 
   useEffect(() => {
     // Store data in IndexedDB
@@ -24,10 +24,12 @@ const MovieCard: React.FC = () => {
       setMovies(storedMovies);
     });
 
-    // getTVShowsFromDB().then((storedTVShows: TVShow[]) => {
-    //   setTVShows(storedTVShows);
-    // });
+    getTVShowsFromDB().then((storedTVShows: TVShow[]) => {
+      setTVShows(storedTVShows);
+    });
   }, []);
+  console.log(tvShows);
+  
 
   const sliderSettings = {
     infinite: true,
