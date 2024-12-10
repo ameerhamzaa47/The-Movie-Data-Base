@@ -33,7 +33,7 @@ const Footer: FC = () => {
 
             <div className='block md:hidden'>
 
-            <div className='py-4 flex  justify-between mx-10'>
+            <div className='py-4 flex gap-6 justify-between mx-10'>
                     <img className='w-28 ml-10' src={footerImg} alt="" />
                     <div className='text-cyan-500 p-2 leading-10 w-44 truncate text-center mt-5 font-bold text-xl rounded-lg bg-white'>
                         <Link to={'/register'}>{username ? `Hi, ${username}!` : 'Join'}</Link>

@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Protected from './Component/Protected'
 import Home from './Component/Home'
 import { ThemeProvider } from './Context/ThemeProvider'
+import ErrorBoundary from './Component/ErrorBoundries'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <ThemeProvider>
     <Layout>
     <BrowserRouter>
+    <ErrorBoundary>
       <Header/>
       <Routes>
         <Route path='/register' element={<Register/>} />
@@ -25,6 +27,7 @@ function App() {
         <Route path='/' element={<Protected cmp={Home}/>} />
       </Routes>
       <ToastContainer />
+      </ErrorBoundary>
     </BrowserRouter>
     </Layout>
     </ThemeProvider>
