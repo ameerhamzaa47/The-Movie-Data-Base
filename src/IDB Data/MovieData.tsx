@@ -66,7 +66,7 @@ export const moviesData: Movie[] = [
   },
   {
     id: 5,
-    title: 'Creature Commandos',
+    title: 'Commandos',
     releaseDate: 'Dec 05, 2024',
     imageUrl: img5,
     score: 74,
@@ -86,7 +86,7 @@ export const moviesData: Movie[] = [
   },
   {
     id: 7,
-    title: 'The Day of the Jackal',
+    title: 'The Day of Jackal',
     releaseDate: 'Nov 07, 2024',
     imageUrl: img7,
     score: 82,
@@ -136,7 +136,7 @@ export const moviesData: Movie[] = [
   },
   {
     id: 12,
-    title: 'Star Wars: Skeleton Crew',
+    title: 'Star Wars: Skeleton',
     releaseDate: 'Dec 02, 2024',
     imageUrl: img12,
     score: 70,

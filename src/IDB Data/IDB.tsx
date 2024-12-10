@@ -15,6 +15,7 @@ export interface Movie {
     id: number;
     title: string;
     season: number;
+    releaseDate: string;
     episodeCount: number;
     imageUrl: string;
     score: number;
@@ -22,25 +23,40 @@ export interface Movie {
     genre: string[];
     runtime: number;
   }
+
+  export interface Trailer {
+    id: number;
+    movieId: number; // Link to a specific movie
+    title: string;
+    videoUrl: string; // URL of the trailer video
+    releaseDate: string;
+    image: string;
+  }
   
   // Open IndexedDB and create object stores for movies and tvshows
   const openDB = (): Promise<IDBDatabase> => {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open('MediaDB', 1); // Database name
+      const request = indexedDB.open('MediaDB', 2); // Incremented version to support trailers
   
       request.onupgradeneeded = (event: any) => {
         const db = event.target.result;
   
-        // Create movie object store
+        // Create movie object store if not exists
         if (!db.objectStoreNames.contains('movies')) {
           const moviesStore = db.createObjectStore('movies', { keyPath: 'id' });
           moviesStore.createIndex('title', 'title', { unique: false });
         }
   
-        // Create TV Show object store
+        // Create TV show object store if not exists
         if (!db.objectStoreNames.contains('tvshows')) {
           const tvshowsStore = db.createObjectStore('tvshows', { keyPath: 'id' });
           tvshowsStore.createIndex('title', 'title', { unique: false });
+        }
+  
+        // Create trailer object store
+        if (!db.objectStoreNames.contains('trailers')) {
+          const trailersStore = db.createObjectStore('trailers', { keyPath: 'id' });
+          trailersStore.createIndex('movieId', 'movieId', { unique: false });
         }
       };
   
@@ -84,6 +100,25 @@ export interface Movie {
       console.error('Error adding TV shows:', event.target.error);
     };
   };
+
+  // Add trailers to IndexedDB
+  export const addTrailersToDB = async (trailers: Trailer[]): Promise<void> => {
+    const db = await openDB();
+    const transaction = db.transaction('trailers', 'readwrite');
+    const trailersStore = transaction.objectStore('trailers');
+  
+    trailers.forEach((trailer) => {
+      trailersStore.put(trailer); // Add or update trailer
+    });
+  
+    transaction.oncomplete = () => {
+      console.log('Trailers added successfully!');
+    };
+    transaction.onerror = (event: any) => {
+      console.error('Error adding trailers:', event.target.error);
+    };
+  };
+  
   
   // Fetch Movies from IndexedDB
   export const getMoviesFromDB = async (): Promise<Movie[]> => {
@@ -104,6 +139,36 @@ export interface Movie {
     const transaction = db.transaction('tvshows', 'readonly');
     const tvShowsStore = transaction.objectStore('tvshows');
     const request = tvShowsStore.getAll();
+  
+    return new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (event: any) => reject(event.target.error);
+    });
+  };
+  
+
+  // Fetch Trailers from IndexedDB
+  export const getTrailersFromDB = async (): Promise<Trailer[]> => {
+    const db = await openDB();
+    const transaction = db.transaction('trailers', 'readonly');
+    const trailersStore = transaction.objectStore('trailers');
+    const request = trailersStore.getAll();
+  
+    return new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (event: any) => reject(event.target.error);
+    });
+  };
+
+  
+  // trailer specific
+
+  export const getTrailersByMovieId = async (movieId: number): Promise<Trailer[]> => {
+    const db = await openDB();
+    const transaction = db.transaction('trailers', 'readonly');
+    const trailersStore = transaction.objectStore('trailers');
+    const index = trailersStore.index('movieId');
+    const request = index.getAll(movieId); // Query by movieId
   
     return new Promise((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);

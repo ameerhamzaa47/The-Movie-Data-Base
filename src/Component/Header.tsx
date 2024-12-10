@@ -59,9 +59,9 @@ const Header: FC = () => {
 
       <div>
 
-        <a className="btn btn-ghost relative left-5 md:left-0 text-xl">
+        <Link to={'/'} className="btn btn-ghost relative left-5 md:left-0 text-xl">
           <img className='w-44' src={logo} alt="" />
-        </a>
+        </Link>
 
         {/* Mobile View */}
 
@@ -116,7 +116,7 @@ const Header: FC = () => {
         <div className="dropdown mx-2 hidden md:flex">
           <label tabIndex={0} className="text-white font-semibold cursor-pointer m-1" onClick={() => setOpen(!open)}>Movies</label>
           {open && (
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32 mt-8">
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 z-20 rounded-box w-32 mt-8">
               <li><a>Item 1</a></li>
               <li><a>Item 2</a></li>
               <li><a>Item 3</a></li>
@@ -127,7 +127,7 @@ const Header: FC = () => {
         <div className="dropdown mx-2 hidden md:flex">
           <label tabIndex={0} className="text-white font-semibold cursor-pointer m-1" onClick={() => setOpen(!open)}>TV Shows</label>
           {open && (
-            <ul tabIndex={0} className="dropdown-content  menu p-2 shadow bg-base-100 rounded-box w-32 mt-8">
+            <ul tabIndex={0} className="dropdown-content  menu p-2 z-20 shadow bg-base-100 rounded-box w-32 mt-8">
               <li><a>Item 4</a></li>
               <li><a>Item 5</a></li>
               <li><a>Item 6</a></li>
@@ -138,7 +138,7 @@ const Header: FC = () => {
         <div className="dropdown mx-2 hidden md:flex">
           <label tabIndex={0} className="text-white font-semibold cursor-pointer m-1" onClick={() => setOpen(!open)}>People</label>
           {open && (
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32 mt-8">
+            <ul tabIndex={0} className="dropdown-content menu p-2 z-20 shadow bg-base-100 rounded-box w-32 mt-8">
               <li><a>Item 7</a></li>
               <li><a>Item 8</a></li>
               <li><a>Item 9</a></li>
@@ -169,7 +169,7 @@ const Header: FC = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              className="menu menu-sm text-black  dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow">
               <li>
                 <a className="justify-between">
                   {username ? username : "Guest"}
