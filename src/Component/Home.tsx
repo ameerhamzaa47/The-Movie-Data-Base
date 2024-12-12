@@ -3,20 +3,24 @@ import Slider from './Slider'
 import MovieCard from './Movie'
 import JoinToday from './JoinToday'
 import LeaderBoard from './LeaderBoard'
-import Footer from './Footer'
+import MovieNshow from './MovieNshow'
+import Trailer from './Trailer'
+import TvShow from './TvShow'
 
 
-const Home:FC = () => {
+const Home: FC = () => {
 
 
   return (
     <div>
-      <Slider/>
-      <MovieCard/>
-      <JoinToday/>
-      <LeaderBoard/>
-      <Footer/>
-     </div>
+      <Slider />
+      <MovieCard />
+      <Trailer />
+      <TvShow />
+      <MovieNshow />
+      <JoinToday />
+      <LeaderBoard />
+    </div>
   )
 }
 

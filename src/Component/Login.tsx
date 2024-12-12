@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useLayoutEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { auth } from './Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const schema = yup.object().shape({
   Email: yup.string().email('Invalid email format').required('Email is required'),
@@ -19,6 +20,12 @@ const Login: FC = () => {
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  useLayoutEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate])
 
   
 

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useLayoutEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { signInWithPopup } from 'firebase/auth'
 import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const schema = yup.object().shape({
   UserName: yup.string().required('Username is required'),
@@ -27,6 +28,14 @@ const Register: FC = () => {
     resolver: yupResolver(schema)
   });
   const Navigate = useNavigate();
+  const [user] = useAuthState(auth);
+
+  useLayoutEffect(() => {
+    if (user) {
+      Navigate('/');
+    }
+  }, [user, Navigate])
+
   const onSubmit = async (data: any) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, data.Email, data.Password);
@@ -34,6 +43,7 @@ const Register: FC = () => {
 
       // Add user information to Firestore
       await setDoc(doc(db, "users", user.uid), {
+        roleId:2,
         username: data.UserName,
         email: data.Email,
         password: data.Password,

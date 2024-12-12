@@ -33,6 +33,7 @@ export const moviesData: Movie[] = [
     overview: "When a spy posing as a politician's wife learns her lover has been murdered, an old assassin friend joins her on a quest for truth — and vengeance.",
     genre: ["Mystery", "Crime", "Action", "Adventure"],
     runtime: 120,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 2,
@@ -43,6 +44,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 3,
@@ -53,6 +55,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 4,
@@ -63,6 +66,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 5,
@@ -73,6 +77,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 6,
@@ -83,6 +88,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 7,
@@ -93,6 +99,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 8,
@@ -103,6 +110,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 9,
@@ -113,6 +121,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 10,
@@ -123,6 +132,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 11,
@@ -133,6 +143,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 12,
@@ -143,6 +154,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 13,
@@ -153,6 +165,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 14,
@@ -163,6 +176,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 15,
@@ -173,6 +187,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 16,
@@ -183,6 +198,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 17,
@@ -193,6 +209,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 18,
@@ -203,6 +220,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 19,
@@ -213,6 +231,7 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
   {
     id: 20,
@@ -223,5 +242,6 @@ export const moviesData: Movie[] = [
     overview: "A different movie with a thrilling plot.",
     genre: ["Drama", "Thriller"],
     runtime: 110,
+    videoUrl: 'https://www.youtube.com/watch?v=3q4jOv3v6bY',
   },
 ];

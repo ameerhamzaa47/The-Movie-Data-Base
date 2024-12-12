@@ -10,6 +10,8 @@ import Protected from './Component/Protected'
 import Home from './Component/Home'
 import { ThemeProvider } from './Context/ThemeProvider'
 import ErrorBoundary from './Component/ErrorBoundries'
+import AddMovies from './Add Videos/addMovies'
+import DetailPage from './Component/DetailPage'
 
 
 function App() {
@@ -17,19 +19,21 @@ function App() {
   return (
     <>
     <ThemeProvider>
-    <Layout>
     <BrowserRouter>
+    <Layout>
     <ErrorBoundary>
       <Header/>
       <Routes>
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/' element={<Protected cmp={Home}/>} />
+        <Route path='/' element={<Home/>} />
+        <Route path='/detail/:id' element={<DetailPage/>} />
+        <Route path='/addMovie' element={<Protected cmp={AddMovies} />} />
       </Routes>
       <ToastContainer />
       </ErrorBoundary>
-    </BrowserRouter>
     </Layout>
+    </BrowserRouter>
     </ThemeProvider>
     </>
   )

@@ -10,9 +10,11 @@ import { toast } from 'react-toastify';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 // import { PlusIcon } from '@heroicons/react/16/solid';
 import ThemeToggle from './ThemeToggle';
+import profileIcon from '../assets/image/Profile.png'
 
 const Header: FC = () => {
   const [open, setOpen] = useState(false);
+  const [addOpen, setaddOpen] = useState(false);
   const [submenuMovies, setSubmenuMovies] = useState(false);
   const [submenuTVShows, setSubmenuTVShows] = useState(false);
   const [submenuPeople, setSubmenuPeople] = useState(false);
@@ -20,12 +22,6 @@ const Header: FC = () => {
 
   const [user] = useAuthState(auth);
   const Navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      Navigate('/');
-    }
-  }, [user, Navigate])
 
 
   useEffect(() => {
@@ -150,13 +146,20 @@ const Header: FC = () => {
 
       <div >
 
-        {user ?
+        {user  ?
         <div className='flex gap-3 text-white'>
 
-          <div className="btn btn-ghost btn-circle">
-              {/* <PlusIcon className='w-6' /> */}
+            <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
               <img src={Add} className='w-6' alt="" />
-          </div>
+            </div>
+            {addOpen && (
+              <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
+              <li><Link to={'/addMovie'}>Add Movie</Link></li>
+              <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
+              </ul>
+            )}
+            </div>
 
           
           <div className="dropdown dropdown-end">
@@ -164,7 +167,7 @@ const Header: FC = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  src={user.photoURL || profileIcon} />
               </div>
             </div>
             <ul
@@ -172,7 +175,7 @@ const Header: FC = () => {
               className="menu menu-sm text-black  dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow">
               <li>
                 <a className="justify-between">
-                  {username ? username : "Guest"}
+                  {username ? username : user.displayName}
                   <span className="badge">New</span>
                 </a>
               </li>

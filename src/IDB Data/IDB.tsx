@@ -1,15 +1,17 @@
 // indexedDB.ts
 
 export interface Movie {
-    id: number;
-    title: string;
-    releaseDate: string;
-    imageUrl: string;
-    score: number;
-    overview: string;
-    genre: string[];
-    runtime: number;
-  }
+  id: number;
+  title: string;
+  releaseDate?: string;
+  imageUrl: string;
+  score: number;
+  overview: string;
+  genre: string[];
+  runtime: number;
+  videoUrl: string;
+}
+
   
   export interface TVShow {
     id: number;
@@ -26,9 +28,9 @@ export interface Movie {
 
   export interface Trailer {
     id: number;
-    movieId: number; // Link to a specific movie
+    movieId: number;
     title: string;
-    videoUrl: string; // URL of the trailer video
+    videoUrl: string;
     releaseDate: string;
     image: string;
   }
@@ -159,6 +161,27 @@ export interface Movie {
       request.onerror = (event: any) => reject(event.target.error);
     });
   };
+
+
+  // indexedDB.ts
+
+export const getMovieById = async (id: number): Promise<Movie | undefined> => {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('movies', 'readonly');
+    const store = transaction.objectStore('movies');
+    const request = store.get(id);
+    
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+};
+
 
   
   // trailer specific
