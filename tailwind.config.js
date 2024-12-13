@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const daisyui = require('daisyui'); // Using require for CommonJS
+const daisyui = require('daisyui');
+const tailwindScrollbarHide = require('tailwind-scrollbar-hide');
 
 module.exports = {
   content: [
@@ -19,7 +20,7 @@ module.exports = {
   darkMode: "selector",
   plugins: [
     daisyui,
-    require('tailwind-scrollbar-hide'), // Use require here as well
+    tailwindScrollbarHide,
   ],
 }
 
@@ -27,9 +28,9 @@ module.exports = {
 
 
 // /** @type {import('tailwindcss').Config} */
-// const daisyui = require('daisyui');
+// import daisyui from 'daisyui';
 
-// module.exports = {
+// export default {
 //   content: [
 //     "./index.html",
 //     "./src/**/*.{js,ts,jsx,tsx}",

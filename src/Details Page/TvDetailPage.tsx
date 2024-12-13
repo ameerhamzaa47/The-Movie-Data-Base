@@ -14,7 +14,6 @@ import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
 import { tvShowsData } from '../IDB Data/TvShowData';
 
-
 const TvDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
