@@ -97,7 +97,7 @@ const LeaderBoard:FC = () => {
            <img className='rounded-full w-14 h-14' src="https://media.themoviedb.org/t/p/w128_and_h128_face/A1pIXQZD86MzfP5pvr37C68YiGv.jpg" alt="" /> 
            <div className='mx-3 mt-1'>
             <p>raze464</p>
-            <DynamicLines width1={130} width2={280}/>
+            <DynamicLines width1={130} width2={250}/>
             </div>
         </div>
 
