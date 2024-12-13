@@ -66,7 +66,7 @@ const AddMovies: FC = () => {
         score: 0,
         overview: "Movie overview here",
         genre: ["Drama"],
-        runtime: Number(data.Runtime),
+        runtime: data.Runtime,
         videoUrl: data.Video,
       };
 
