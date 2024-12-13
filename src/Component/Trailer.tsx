@@ -46,7 +46,7 @@ const Trailer:FC = () => {
   }, []);
 
   const TrailersliderSettings ={
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -69,8 +69,33 @@ const Trailer:FC = () => {
     draggable: true,
   }
 
-  const [activeTab, setActiveTab] = useState<string>("Popular");
-  const tabs = ["Popular", "Streaming", "On TV", "For Rent", "In Theaters"];
+  const [loading, setLoading] = useState<boolean>(false);
+  const [filteredTrailer, setFilteredTrailer] = useState<Trailer[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("All");
+  const tabs = ["All", "Movies", "On TV", "For Rent", "In Theaters"];
+
+  useEffect(()=>{
+    setLoading(true);
+    setTimeout(()=>{
+        switch(activeTab){
+          case 'Movies':
+            setFilteredTrailer(trailers.filter((trailer) => trailer.type === 'movie'));
+            break;
+          case 'On TV':
+            setFilteredTrailer(trailers.filter((trailer) => trailer.type === 'tv'));
+            break;
+          case 'In Theaters':
+            setFilteredTrailer(trailers.filter((trailer)=> trailer.type === 'theater'));
+            break;
+          case 'All':
+          default:
+            setFilteredTrailer(trailers);
+            break;
+        }
+        setLoading(false);
+    },500)
+  },[activeTab, trailers])
+
 
   return (
     <>
@@ -102,24 +127,31 @@ const Trailer:FC = () => {
       {/* Trailer */}
         <div className=" w-full h-96 px-6 overflow-hidden z-10">
   
-        <Slider {...TrailersliderSettings}>
-    {trailers.map((trailer) => (
-      <div className="md:px-2" key={trailer.id} onMouseEnter={() => handleMouseEnter(trailer.image)} onMouseLeave={handleMouseLeave}>
-        <div className="movie-card w-96 px-10 md:px-0 h-96 rounded-xl flex flex-col justify-between">
-          <img
-            src={trailer.image}
-            alt={trailer.title}
-            className="w-full h-56 object-cover cursor-pointer rounded-t-xl hover:scale-105 transition-all"
-          />
-          <i onClick={() => handleVideoClick(trailer.videoUrl)} className="fa-solid fa-play absolute hover:opacity-50 transition-all text-white dark:text-cyan-500 text-7xl mt-20 ml-40 cursor-pointer"></i>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mt-1 md:mt-2 text-white absolute top-56">{trailer.title}</h3>
-            <p className="text-sm text-white  absolute top-64">{trailer.releaseDate}</p>
-          </div>
-        </div>
-      </div>
-    ))}
-  </Slider>
+        {
+          loading ? (
+            <div className="flex justify-center items-center h-full">
+              <div className="w-16 h-16 border-4 border-solid border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )
+          :<Slider {...TrailersliderSettings}>
+          {filteredTrailer.map((trailer) => (
+            <div className="md:px-2" key={trailer.id} onMouseEnter={() => handleMouseEnter(trailer.image)} onMouseLeave={handleMouseLeave}>
+              <div className="movie-card w-96 px-10 md:px-0 h-96 rounded-xl flex flex-col justify-between">
+                <img
+                  src={trailer.image}
+                  alt={trailer.title}
+                  className="w-full h-56 object-cover cursor-pointer rounded-t-xl hover:scale-105 transition-all"
+                />
+                <i onClick={() => handleVideoClick(trailer.videoUrl)} className="fa-solid fa-play absolute hover:opacity-50 transition-all text-white dark:text-cyan-500 text-7xl mt-20 ml-40 cursor-pointer"></i>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mt-1 md:mt-2 text-white absolute top-56">{trailer.title}</h3>
+                  <p className="text-sm text-white  absolute top-64">{trailer.releaseDate}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
+        }
   
   {selectedVideo && (
               <div

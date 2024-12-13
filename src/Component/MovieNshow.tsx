@@ -5,6 +5,7 @@ import { moviesData } from '../IDB Data/MovieData';
 import { tvShowsData } from '../IDB Data/TvShowData';
 import { addMoviesToDB, addTVShowsToDB, getMoviesFromDB, getTVShowsFromDB, Movie, TVShow} from '../IDB Data/IDB';
 import CircularRating from './RatingBar';
+import { Link } from 'react-router-dom';
 
 
 const MovieNshow: FC = () => {
@@ -94,11 +95,13 @@ const MovieNshow: FC = () => {
                 {movies.map((movie) => (
                   <div className="px-2" key={movie.id}>
                     <div className="movie-card w-48 px-4 md:px-0 h-96 rounded-xl flex flex-col justify-between">
+                    <Link to={`/Mdetail/${movie.id}`}>
                       <img
                         src={movie.imageUrl}
                         alt={movie.title}
                         className="w-full h-56 object-cover rounded-t-xl"
                       />
+                    </Link>
                       <div className="p-4">
                         <CircularRating value={movie.score} />
                         <h3 className="text-lg font-semibold mt-1 md:mt-2 absolute top-64">{movie.title}</h3>
@@ -126,11 +129,11 @@ const MovieNshow: FC = () => {
             {tvShows.map((tv) => (
               <div className="px-2" key={tv.id}>
                 <div className="tv-card w-48 px-4 md:px-0 h-96 rounded-xl flex flex-col justify-between">
-                  <img
+                <Link to={`/Tvdetail/${tv.id}`}><img
                     src={tv.imageUrl}
                     alt={tv.title}
                     className="w-full h-56 object-cover rounded-t-xl"
-                  />
+                  /></Link>
                   <div className="p-4">
                     <CircularRating value={tv.score} />
                     <h3 className="text-lg font-semibold mt-1 md:mt-2 absolute top-64">{tv.title}</h3>

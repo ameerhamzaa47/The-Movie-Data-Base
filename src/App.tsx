@@ -11,7 +11,8 @@ import Home from './Component/Home'
 import { ThemeProvider } from './Context/ThemeProvider'
 import ErrorBoundary from './Component/ErrorBoundries'
 import AddMovies from './Add Videos/addMovies'
-import DetailPage from './Component/DetailPage'
+import MDetailPage from './Details Page/MDetailPage'
+import TvDetailPage from './Details Page/TvDetailPage'
 
 
 function App() {
@@ -27,7 +28,8 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/' element={<Home/>} />
-        <Route path='/detail/:id' element={<DetailPage/>} />
+        <Route path='/Mdetail/:id' element={<MDetailPage/>} />
+        <Route path='/Tvdetail/:id' element={<TvDetailPage/>} />
         <Route path='/addMovie' element={<Protected cmp={AddMovies} />} />
       </Routes>
       <ToastContainer />

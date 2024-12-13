@@ -11,10 +11,14 @@ export default {
       fontFamily: {
         Poppins: ['Roboto', 'sans-serif'],
       },
+      boxShadow: {
+        'left': '-10px 0px 15px rgba(0, 0, 0, 0.3)',
+      },
     },
   },
   darkMode: "selector",
   plugins: [
     daisyui,
+    require('tailwind-scrollbar-hide'),
   ],
 }

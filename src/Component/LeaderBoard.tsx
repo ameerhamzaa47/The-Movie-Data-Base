@@ -70,7 +70,7 @@ const LeaderBoard:FC = () => {
            <img className='rounded-full w-14 h-14' src="https://media.themoviedb.org/t/p/w128_and_h128_face/4M7aDjBVq8cnHJKzmVuGaXAUXxI.jpg" alt="" /> 
            <div className='mx-3 mt-1'>
             <p>Samara</p>
-            <DynamicLines width1={300} width2={150}/> 
+            <DynamicLines width1={250} width2={150}/> 
             </div>
         </div>
 
@@ -106,7 +106,7 @@ const LeaderBoard:FC = () => {
            <img className='rounded-full w-14 h-14' src="https://media.themoviedb.org/t/p/w128_and_h128_face/utJwDgfURkMS1RkROvcRSCQMA5H.jpg" alt="" /> 
            <div className='mx-3 mt-1'>
             <p>chkchkboom</p>
-            <DynamicLines width1={120} width2={300}/>
+            <DynamicLines width1={120} width2={250}/>
             </div>
         </div>
     </div>

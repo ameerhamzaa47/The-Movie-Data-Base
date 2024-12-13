@@ -8,7 +8,7 @@ export interface Movie {
   score: number;
   overview: string;
   genre: string[];
-  runtime: number;
+  runtime: string;
   videoUrl: string;
 }
 
@@ -16,19 +16,20 @@ export interface Movie {
   export interface TVShow {
     id: number;
     title: string;
-    season: number;
+    type: string;
     releaseDate: string;
     episodeCount: number;
     imageUrl: string;
     score: number;
     overview: string;
     genre: string[];
-    runtime: number;
+    runtime: string;
+    videoUrl: string;
   }
 
   export interface Trailer {
     id: number;
-    movieId: number;
+    type: string;
     title: string;
     videoUrl: string;
     releaseDate: string;
@@ -38,7 +39,7 @@ export interface Movie {
   // Open IndexedDB and create object stores for movies and tvshows
   const openDB = (): Promise<IDBDatabase> => {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open('MediaDB', 2); // Incremented version to support trailers
+      const request = indexedDB.open('MediaDB', 2);
   
       request.onupgradeneeded = (event: any) => {
         const db = event.target.result;
@@ -163,7 +164,7 @@ export interface Movie {
   };
 
 
-  // indexedDB.ts
+  // get movie by ID
 
 export const getMovieById = async (id: number): Promise<Movie | undefined> => {
   const db = await openDB();
@@ -182,6 +183,24 @@ export const getMovieById = async (id: number): Promise<Movie | undefined> => {
   });
 };
 
+// get TV Show by ID
+
+export const getTVShowById = async (id: number): Promise<TVShow | undefined> => {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('tvshows', 'readonly');
+    const store = transaction.objectStore('tvshows');
+    const request = store.get(id);
+    
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+};
 
   
   // trailer specific
