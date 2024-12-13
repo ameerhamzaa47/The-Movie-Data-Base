@@ -72,7 +72,7 @@ const Trailer:FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredTrailer, setFilteredTrailer] = useState<Trailer[]>([]);
   const [activeTab, setActiveTab] = useState<string>("All");
-  const tabs = ["All", "Movies", "On TV", "For Rent", "In Theaters"];
+  const tabs = ["All", "Movies", "On TV", "In Theaters"];
 
   useEffect(()=>{
     setLoading(true);
@@ -101,13 +101,13 @@ const Trailer:FC = () => {
     <>
      {/* Trailer Slider */}
 
-     <div  className="relative bg-cover bg-center  w-full h-96" style={{ backgroundImage: `url(${backgroundImage})` }}>
+     <div  className="relative bg-cover bg-center  w-full h-auto" style={{ backgroundImage: `url(${backgroundImage})` }}>
         
         <div className="absolute inset-0 bg-black opacity-50"></div>
           {/* Title */}
-          <div className="flex flex-col md:flex-row md:space-x-4 py-2 md:p-4 z-10 relative">
-        <h2 className="text-white font-bold text-xl">Latest Trailers</h2>
-        <div className="flex md:space-x-4 border-2 border-teal-700 rounded-full">
+          <div className="flex flex-col md:flex-row items-center md:space-x-4 py-2 md:p-4 z-10 relative">
+        <h2 className="text-white font-bold ml-4 text-xl">Latest Trailers</h2>
+        <div className="flex space-x-0 w-80 md:w-auto m-2 p-1 md:space-x-4 border-2 border-teal-700 rounded-full">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -136,16 +136,16 @@ const Trailer:FC = () => {
           :<Slider {...TrailersliderSettings}>
           {filteredTrailer.map((trailer) => (
             <div className="md:px-2" key={trailer.id} onMouseEnter={() => handleMouseEnter(trailer.image)} onMouseLeave={handleMouseLeave}>
-              <div className="movie-card w-96 px-10 md:px-0 h-96 rounded-xl flex flex-col justify-between">
+              <div className="movie-card w-96 md:px-0 h-96 rounded-xl flex flex-col justify-between">
                 <img
                   src={trailer.image}
                   alt={trailer.title}
                   className="w-full h-56 object-cover cursor-pointer rounded-t-xl hover:scale-105 transition-all"
                 />
                 <i onClick={() => handleVideoClick(trailer.videoUrl)} className="fa-solid fa-play absolute hover:opacity-50 transition-all text-white dark:text-cyan-500 text-7xl mt-20 ml-40 cursor-pointer"></i>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold mt-1 md:mt-2 text-white absolute top-56">{trailer.title}</h3>
-                  <p className="text-sm text-white  absolute top-64">{trailer.releaseDate}</p>
+                <div className="flex justify-center items-center">
+                  <h3 className="text-lg font-semibold mr-14 mt-1 md:mt-2 text-white absolute top-56">{trailer.title}</h3>
+                  <p className="text-sm text-white mr-14 absolute top-64">{trailer.releaseDate}</p>
                 </div>
               </div>
             </div>

@@ -84,7 +84,7 @@ const TvShow:FC = () => {
          {/* title */}
          <div className="flex md:items-center flex-col md:flex-row px-1 md:space-x-4 py-2 md:p-4 z-10 relative">
       <h2 className="text-black font-bold text-xl px-2 dark:text-white">TV Show</h2>
-      <div className="flex w-96 md:mx-4 my-4 text-sm font-semibold md:gap-1 border border-slate-800 dark:border-teal-400 rounded-full md:p-1">
+      <div className="flex w-auto md:w-96 md:mx-4 my-4 text-sm font-semibold md:gap-1 border border-slate-800 dark:border-teal-400 rounded-full md:p-1">
         {tabs.map((tab) => (
           <button
             key={tab}
