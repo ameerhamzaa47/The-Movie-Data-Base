@@ -15,6 +15,7 @@ const schema = yup.object().shape({
   overview: yup.string().required('Overview is required'),
   score: yup.number().required('Score is required').min(0, 'Score must be at least 0').max(100, 'Score must be at most 100'),
   genre: yup.string().required('Genre is required'),
+  movieUrl: yup.string().required('Movie URL is required'),
 });
 
 const AddMovies: FC = () => {
@@ -69,6 +70,7 @@ const AddMovies: FC = () => {
         genre: genresArray,
         runtime: data.Runtime+ ' min',
         videoUrl: data.Video,
+        movieUrl: data.movieUrl,
       };
 
       // Store the movie in IndexedDB
@@ -170,6 +172,16 @@ const AddMovies: FC = () => {
           />
           {errors.Video && <p className='text-red-500'>{errors.Video.message}</p>}
         </div>
+
+        <div className='flex flex-col my-2'>
+          <label className='font-semibold'>Movie Link</label>
+          <input
+            {...register("movieUrl")}
+            className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
+            placeholder='Movie Link...'
+            type="text"
+          />
+          </div>
 
         <div className='flex flex-col my-2'>
           <label className='font-semibold'>Overview</label>
