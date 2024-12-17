@@ -3,7 +3,7 @@ import logo from '../assets/image/Logo.png'
 import Add from '../assets/image/AddMovies.png'
 import { Link } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from './Firebase';
+import { auth } from '../Auth/Firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -146,20 +146,23 @@ const Header: FC = () => {
 
       <div >
 
+        {user?.email === 'hamzaataariq12@gmail.com' ?
+      <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
+        <img src={Add} className='w-6' alt="" />
+      </div>
+      {addOpen && (
+        <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
+        <li><Link to={'/addMovie'}>Add Movie</Link></li>
+        <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
+        </ul>
+      )}
+      </div>
+      : null  
+      }
+
         {user  ?
         <div className='flex gap-3 text-white'>
-
-            <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
-              <img src={Add} className='w-6' alt="" />
-            </div>
-            {addOpen && (
-              <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
-              <li><Link to={'/addMovie'}>Add Movie</Link></li>
-              <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
-              </ul>
-            )}
-            </div>
 
           
           <div className="dropdown dropdown-end">

@@ -8,11 +8,12 @@ import { Link } from 'react-router-dom';
 
 const TvShow:FC = () => {
 
-  const [activeTab, setActiveTab] = useState<string>("Popular");
+  const [activeTab, setActiveTab] = useState<string>("All");
   const tabs = ["All", "Popular", "On TV", "Short", "Theaters", "Animated"];
   const [tvShows, setTVShows] = useState<TVShow[]>([]);
   const [filteredShows, setFilteredShows] = useState<TVShow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  
   
   useEffect(() => {
     // Store data in IndexedDB

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from './Firebase'
+import { auth } from '../Auth/Firebase'
 
 function Protected(props: { cmp: any }) {
   let navigate = useNavigate()

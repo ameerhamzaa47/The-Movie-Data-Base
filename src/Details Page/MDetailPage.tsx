@@ -13,6 +13,7 @@ import img6 from '../assets/Cast/Img_6.png'
 import img7 from '../assets/Cast/Img_7.png'
 import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
+import Discussion from '../Component/Discussion';
 
 
 const MDetailPage: FC = () => {
@@ -244,6 +245,7 @@ const MDetailPage: FC = () => {
         </div>
 
       </div>
+<Discussion/>
     </>
   )
 }

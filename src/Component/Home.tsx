@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import Slider from './Slider'
 import MovieCard from './Movie'
-import JoinToday from './JoinToday'
+import JoinToday from '../Auth/JoinToday'
 import LeaderBoard from './LeaderBoard'
 import MovieNshow from './MovieNshow'
 import Trailer from './Trailer'

@@ -34,6 +34,7 @@ export const moviesData: Movie[] = [
     genre: ["Mystery", "Crime", "Action", "Adventure"],
     runtime: "1h 20m",
     videoUrl: 'https://youtu.be/shzJzjVscno',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 2,
@@ -45,6 +46,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "History", "Action"],
     runtime: "1h 50m",
     videoUrl: 'https://youtu.be/d74vHvsACSs',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 3,
@@ -56,6 +58,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "History", "Thriller"],
     runtime: " 1h 54m",
     videoUrl: 'https://youtu.be/yIBvbxTj0i0',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 4,
@@ -67,6 +70,7 @@ export const moviesData: Movie[] = [
     genre: ["Animation", "Comedy", "Family", "Fantasy", "Adventure"],
     runtime: "1h 31m",
     videoUrl: 'https://youtu.be/SiCTXSwqzkw',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 5,
@@ -78,6 +82,7 @@ export const moviesData: Movie[] = [
     genre: ["Animation", "Sci-Fi & Fantasy", "Action & Adventure"],
     runtime: "1h 10m",
     videoUrl: 'https://youtu.be/VdahDEpqPA8',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 6,
@@ -89,6 +94,7 @@ export const moviesData: Movie[] = [
     genre: ["Crime", "Drama"],
     runtime: "1h 54m",
     videoUrl: 'https://youtu.be/czYUXo0R0oA',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 7,
@@ -100,6 +106,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "Action & Adventure", "Mystery"],
     runtime: "1h 10m",
     videoUrl: 'https://youtu.be/EUb_04MdnMI',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 8,
@@ -111,6 +118,7 @@ export const moviesData: Movie[] = [
     genre: ["Animation", "Adventure", "Family", "Comedy"],
     runtime: "1h 40m",
     videoUrl: 'https://youtu.be/9IisFuMUz44',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 9,
@@ -122,6 +130,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "Romance", "Fantasy"],
     runtime: "2h 40m",
     videoUrl: 'https://youtu.be/pqi45Qhq3CI',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 10,
@@ -133,6 +142,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama"],
     runtime: "1h 46m",
     videoUrl: 'https://youtu.be/76Aljh0U8Hk',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 11,
@@ -144,6 +154,7 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "Mystery", "Fantasy"],
     runtime: "1h 23m",
     videoUrl: 'https://youtu.be/E83Y6dzXph0?si=WVC51vi8T_bnfL-f',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 12,
@@ -155,6 +166,7 @@ export const moviesData: Movie[] = [
     genre: ["Action & Adventure", "Sci-Fi & Fantasy"],
     runtime: "1h 20m",
     videoUrl: 'https://youtu.be/f19gfOMZTtg',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 13,
@@ -166,6 +178,7 @@ export const moviesData: Movie[] = [
     genre: ["Comedy", "Drama"],
     runtime: "1h 20m",
     videoUrl: 'https://youtu.be/EicNAYAs8ds',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 14,
@@ -177,6 +190,7 @@ export const moviesData: Movie[] = [
     genre: ["Sci-Fi & Fantasy", "Drama"],
     runtime: "1h 33m",
     videoUrl: 'https://youtu.be/8ZYhuvIv1pA',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 15,
@@ -188,6 +202,7 @@ export const moviesData: Movie[] = [
     genre: ["Animation", "Sci-Fi & Fantasy"," Action & Adventure", "Mystery", "Drama"],
     runtime: "1h 05m",
     videoUrl: 'https://youtu.be/W4gLFBNGgiY',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 16,
@@ -199,6 +214,7 @@ export const moviesData: Movie[] = [
     genre: ["Comedy", "Fantasy"],
     runtime: "1h 48m",
     videoUrl: 'https://youtu.be/Cr7z5Q7oJc0?si=X6_demOzK9cqWDLI',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 17,
@@ -210,6 +226,7 @@ export const moviesData: Movie[] = [
     genre: ["Crime", "Drama", "Mystery"],
     runtime: "1h 13m",
     videoUrl: 'https://youtu.be/DJH6Lf8FBwc',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 18,
@@ -221,6 +238,7 @@ export const moviesData: Movie[] = [
     genre: ["Horror", "Science Fiction"],
     runtime: "1h 59m",
     videoUrl: 'https://youtu.be/x0XDEhP4MQs',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 19,
@@ -232,6 +250,7 @@ export const moviesData: Movie[] = [
     genre: ["Comedy", "Romance"],
     runtime: "1h 35m",
     videoUrl: 'https://youtu.be/ZlOFh9ksLs8',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
   {
     id: 20,
@@ -243,5 +262,6 @@ export const moviesData: Movie[] = [
     genre: ["Drama", "Mystery"],
     runtime: "1h 40m",
     videoUrl: 'https://youtu.be/zv817ouw7qE',
+    movieUrl: 'https://www.netflix.com/in/title/81004270',
   },
 ];

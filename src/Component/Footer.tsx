@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react'
 import footerImg from '../assets/image/Footer.png'
 import { Link } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from './Firebase'
+import { auth } from '../Auth/Firebase'
 import { doc, getDoc, getFirestore } from 'firebase/firestore'
 
 

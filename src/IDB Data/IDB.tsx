@@ -10,6 +10,7 @@ export interface Movie {
   genre: string[];
   runtime: string;
   videoUrl: string;
+  movieUrl: string;
 }
 
   

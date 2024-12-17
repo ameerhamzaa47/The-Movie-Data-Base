@@ -12,6 +12,9 @@ const schema = yup.object().shape({
   Date: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Must be a valid date in YYYY-MM-DD format').required('Release Date is required'),
   Poster: yup.mixed().required('Image is required'), // Correct this validation for the file upload
   Video: yup.string().matches(/^https:\/\/youtu\.be\/[a-zA-Z0-9_-]+(\?si=[a-zA-Z0-9_-]+)?$/, 'Must be a valid YouTube link').required('Video link is required'),
+  overview: yup.string().required('Overview is required'),
+  score: yup.number().required('Score is required').min(0, 'Score must be at least 0').max(100, 'Score must be at most 100'),
+  genre: yup.string().required('Genre is required'),
 });
 
 const AddMovies: FC = () => {
@@ -24,7 +27,7 @@ const AddMovies: FC = () => {
   const getNextId = async (): Promise<number> => {
     try {
       const movies = await getMoviesFromDB();
-      const maxId = movies.length > 0 ? Math.max(...movies.map(movie => movie.id)) : 0;  // Find the highest ID
+      const maxId = movies.length > 0 ? Math.max(...movies.map(movie => movie.id)) : 0;
       return maxId + 1;
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -33,40 +36,38 @@ const AddMovies: FC = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log("Form Data:", data); // Debug log
 
     const nextId = await getNextId();
-    const userProvidedDate = data.Date;  // This is the date string (e.g., '2024-12-04')
+    const userProvidedDate = data.Date;
 
     // Convert the date string (YYYY-MM-DD) to a Date object
     const dateObj = new Date(userProvidedDate);
 
-    // Format the date to "Dec 01, 2024"
     const formattedDate = dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',  // 'short' gives "Dec", 'long' would give "December"
       day: '2-digit',  // '2-digit' will give "01"
     });
 
-    console.log("Formatted Date:", formattedDate);  // Log the formatted date (e.g., "Dec 01, 2024")
-
     // Handling file upload and URL creation for poster image
     const posterFile = data.Poster[0];
 
-    // Save the file itself in IndexedDB (you can use FileReader to convert it to a data URL if necessary)
+    // Save the file itself in IndexedDB
     const reader = new FileReader();
     reader.onloadend = async () => {
-      const imageUrl = reader.result as string; // This is the data URL of the image.
+      const imageUrl = reader.result as string;
+
+      const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
 
       const newMovie: Movie = {
         id: nextId,
         title: data.title,
         releaseDate: formattedDate,
         imageUrl: imageUrl,
-        score: 0,
-        overview: "Movie overview here",
-        genre: ["Drama"],
-        runtime: data.Runtime,
+        score: data.score,
+        overview: data.overview,
+        genre: genresArray,
+        runtime: data.Runtime+ ' min',
         videoUrl: data.Video,
       };
 
@@ -80,7 +81,6 @@ const AddMovies: FC = () => {
         alert('Failed to add movie');
       }
     };
-
     reader.readAsDataURL(posterFile);
   };
 
@@ -127,6 +127,28 @@ const AddMovies: FC = () => {
         </div>
 
         <div className='flex flex-col my-2'>
+          <label className='font-semibold'>Genre</label>
+          <input
+            {...register("genre")}
+            className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
+            placeholder='Enter Genres (comma separated)...'
+            type="text"
+          />
+          {errors.genre && <p className='text-red-500'>{errors.genre.message}</p>}
+        </div>
+
+        <div className='flex flex-col my-2'>
+          <label className='font-semibold'>Score</label>
+          <input
+            {...register("score")}
+            className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
+            placeholder='Enter Score...'
+            type="number"
+          />
+          {errors.score && <p className='text-red-500'>{errors.score.message}</p>}
+          </div>
+
+        <div className='flex flex-col my-2'>
           <label className='font-semibold'>Poster</label>
           <input
             {...register("Poster")}
@@ -147,6 +169,16 @@ const AddMovies: FC = () => {
             type="text"
           />
           {errors.Video && <p className='text-red-500'>{errors.Video.message}</p>}
+        </div>
+
+        <div className='flex flex-col my-2'>
+          <label className='font-semibold'>Overview</label>
+          <textarea
+            {...register("overview")}
+            className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-20 my-2'
+            placeholder='Enter Overview...'
+          />
+          {errors.overview && <p className='text-red-500'>{errors.overview.message}</p>}
         </div>
 
         <button type="submit" className='bg-zinc-200 w-full dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
