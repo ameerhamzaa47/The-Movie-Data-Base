@@ -11,7 +11,6 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
 // import { PlusIcon } from '@heroicons/react/16/solid';
 import ThemeToggle from './ThemeToggle';
 import profileIcon from '../assets/image/Profile.png'
-import { BellIcon } from '@heroicons/react/16/solid';
 import Notification from '../IDB Data/Notification';
 
 const Header: FC = () => {
