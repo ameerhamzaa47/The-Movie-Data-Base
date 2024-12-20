@@ -4,7 +4,7 @@
       "id": "1",
       "title": "Black Doves",
       "releaseDate": "Dec 05, 2024",
-      "imageUrl": "/src/assets/DataImage/Movie/poster_1.png",
+      "imageUrl": "/public/DataImage/Movie/poster_1.png",
       "score": 79,
       "overview": "When a spy posing as a politician's wife learns her lover has been murdered, an old assassin friend joins her on a quest for truth — and vengeance.",
       "genre": [
@@ -21,7 +21,7 @@
       "id": "2",
       "title": "Mary",
       "releaseDate": "Dec 05, 2024",
-      "imageUrl": "/src/assets/DataImage/Movie/poster_2.png",
+      "imageUrl": "/public/DataImage/Movie/poster_2.png",
       "score": 62,
       "overview": "A miraculous conception. A merciless king. A murderous pursuit. Mary's journey to give birth to Jesus unfolds in this biblical coming-of-age epic.",
       "genre": [
