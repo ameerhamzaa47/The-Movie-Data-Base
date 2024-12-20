@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 import Slider from 'react-slick';
 import Sliderbg from '../assets/image/Slider Bg.png'
-import { moviesData } from '../IDB Data/MovieData';
-import { tvShowsData } from '../IDB Data/TvShowData';
-import { addMoviesToDB, addTVShowsToDB, getMoviesFromDB, getTVShowsFromDB, Movie, TVShow} from '../IDB Data/IDB';
+// import { moviesData } from '../IDB Data/MovieData';
+// import { tvShowsData } from '../IDB Data/TvShowData';
+// import { addMoviesToDB, addTVShowsToDB, getMoviesFromDB, getTVShowsFromDB, Movie, TVShow} from '../IDB Data/IDB';
 import CircularRating from './RatingBar';
 import { Link } from 'react-router-dom';
-
+import { Movie ,TVShow} from '../IDB Data/IDB';
 
 const MovieNshow: FC = () => {
     const [active, setActive] = useState<"ShowMovie" | "ShowtVShow">("ShowMovie");
@@ -15,20 +15,35 @@ const MovieNshow: FC = () => {
     const [filter,setFilter] = useState(true);
 
     useEffect(()=>{
-    addMoviesToDB(moviesData);
-    addTVShowsToDB(tvShowsData);
+    // addMoviesToDB(moviesData);
+    // addTVShowsToDB(tvShowsData);
 
-    getMoviesFromDB().then((storedMovies: Movie[]) => {
-        setMovies(storedMovies);
-      });
+    // getMoviesFromDB().then((storedMovies: Movie[]) => {
+    //     setMovies(storedMovies);
+    //   });
   
-      getTVShowsFromDB().then((storedTVShows: TVShow[]) => {
-        setTVShows(storedTVShows);
-      });
+    //   getTVShowsFromDB().then((storedTVShows: TVShow[]) => {
+    //     setTVShows(storedTVShows);
+    //   });
+
+    const fetchAndStoreMovies = async () => {
+          try {
+            // Fetch movies from an API
+            const response = await fetch('http://localhost:5000/Movies');
+            const moviesData: Movie[] = await response.json();
+    
+            const response2 = await fetch('http://localhost:5000/TVShows');
+            const tvShowsData: TVShow[] = await response2.json();
+            setMovies(moviesData);
+            setTVShows(tvShowsData);
+          } catch (error) {
+            console.error('Error fetching and storing movies:', error);
+          }
+        };
+    
+        fetchAndStoreMovies();
   
     },[])
-
-    console.log(tvShows);
 
     const sliderSettings = {
         infinite: true,

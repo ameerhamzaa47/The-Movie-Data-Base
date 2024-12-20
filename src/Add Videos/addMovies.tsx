@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { addMoviesToDB, getMoviesFromDB } from '../IDB Data/IDB';
+// import { addMoviesToDB, getMoviesFromDB } from '../IDB Data/IDB';
+import 'firebase/storage';
 import { Movie } from '../IDB Data/IDB';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,41 +26,36 @@ const AddMovies: FC = () => {
   const navigate = useNavigate();
 
   // Generate Next ID
-  const getNextId = async (): Promise<number> => {
-    try {
-      const movies = await getMoviesFromDB();
-      const maxId = movies.length > 0 ? Math.max(...movies.map(movie => movie.id)) : 0;
-      return maxId + 1;
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-      return 1;
-    }
-  };
+  const getNextId = async () => {
+  const response = await fetch('http://localhost:5000/Movies');
+        const movies = await response.json();
+        const maxId = movies.length > 0 ? Math.max(...movies.map((movie: Movie) => movie.id)) : 0;
+        return maxId + 1;
+  }
 
   const onSubmit = async (data: any) => {
-
     const nextId = await getNextId();
     const userProvidedDate = data.Date;
-
+  
     // Convert the date string (YYYY-MM-DD) to a Date object
     const dateObj = new Date(userProvidedDate);
-
+  
     const formattedDate = dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',  // 'short' gives "Dec", 'long' would give "December"
       day: '2-digit',  // '2-digit' will give "01"
     });
-
+  
     // Handling file upload and URL creation for poster image
     const posterFile = data.Poster[0];
-
+  
     // Save the file itself in IndexedDB
     const reader = new FileReader();
     reader.onloadend = async () => {
       const imageUrl = reader.result as string;
-
+      
       const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
-
+  
       const newMovie: Movie = {
         id: nextId,
         title: data.title,
@@ -68,23 +64,35 @@ const AddMovies: FC = () => {
         score: data.score,
         overview: data.overview,
         genre: genresArray,
-        runtime: data.Runtime+ ' min',
+        runtime: data.Runtime + ' min',
         videoUrl: data.Video,
         movieUrl: data.movieUrl,
       };
-
-      // Store the movie in IndexedDB
+  
       try {
-        await addMoviesToDB([newMovie]);
+        const response = await fetch('http://localhost:5000/Movies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newMovie),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add movie to server');
+        }
+  
         alert('Movie Added Successfully');
         navigate('/');
       } catch (error) {
-        console.error('Error adding movie to IndexedDB', error);
+        console.error(error);
         alert('Failed to add movie');
       }
     };
+  
     reader.readAsDataURL(posterFile);
   };
+  
 
   return (
     <div className='p-10 flex flex-col items-center'>

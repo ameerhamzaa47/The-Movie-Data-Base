@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { moviesData } from '../IDB Data/MovieData';
-import { addMoviesToDB, getMovieById, Movie } from '../IDB Data/IDB';
+// import { moviesData } from '../IDB Data/MovieData';
+// import { addMoviesToDB, getMovieById, Movie } from '../IDB Data/IDB';
 import { ListBulletIcon, HeartIcon, BookmarkIcon, PlayIcon } from '@heroicons/react/16/solid';
 import { Tooltip } from 'react-tooltip'
 import img1 from '../assets/Cast/Img_1.png'
@@ -14,7 +14,21 @@ import img7 from '../assets/Cast/Img_7.png'
 import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
 import Discussion from '../Component/Discussion';
+// import {loadStripe} from '@stripe/stripe-js'
 
+
+export interface Movie {
+  id: number;
+  title: string;
+  releaseDate?: string;
+  imageUrl: string;
+  score: number;
+  overview: string;
+  genre: string[];
+  runtime: string;
+  videoUrl: string;
+  movieUrl: string;
+}
 
 const MDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
@@ -42,18 +56,33 @@ const MDetailPage: FC = () => {
   const { id } = useParams<{ id: string }>()
   console.log(id);
   const [movies, setMovies] = useState<Movie[]>([]);
+console.log('neww',movies);
 
-  useEffect(() => {
-    // Store data in IndexedDB
-    addMoviesToDB(moviesData);
-    // Fetch data from IndexedDB
-    if (id) {
-      getMovieById(Number(id)).then((fetchedMovie: any) => {
-        setMovies([fetchedMovie]);
-      });
+useEffect(() => {
+  const fetchMovieData = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/Movies');
+      if (!res.ok) {
+        throw new Error('Failed to fetch movies');
+      }
+      const movies: Movie[] = await res.json();
+
+      // Find the movie with the matching ID from the fetched data
+      const foundMovie = movies.find((movie) => movie.id.toString() === id);
+      if (!foundMovie) {
+        throw new Error(`Movie with ID ${id} not found`);
+      }
+
+      setMovies([foundMovie]);
+    } catch (error) {
+      console.error('Failed to fetch movie data:', error);
     }
+  };
 
-  }, [id]);
+  if (id) {
+    fetchMovieData();
+  }
+}, [id]);
 
   // rating bar
   interface RatingBarProps {
@@ -109,6 +138,33 @@ const MDetailPage: FC = () => {
       </div>
     )
   }
+
+  // const stripePromise = loadStripe('pk_test_51QPfwVABp1KJlVmplqeMwqN8TLAjkI0fJy2bhdS89zrY4yXWG5ABtUTEDOz5AUfvTY4HW9SOOof8pUbdDqZhA7iA00GXu1zBgb');
+
+  // const handlePayment = async () => {
+  //   const stripe = await stripePromise;
+  
+  //   // Call your backend to create a checkout session
+  //   const response = await fetch('http://localhost:3000/create-checkout-session', {
+  //     method: 'POST',
+  //   });
+  
+  //   const session = await response.json();
+  
+  //   // Redirect to Stripe Checkout page
+  //   if (stripe) {
+  //     const { error } = await stripe.redirectToCheckout({
+  //       sessionId: session.id,
+  //     });
+    
+  //     if (error) {
+  //       console.log('Error redirecting to checkout:', error);
+  //     }
+  //   } else {
+  //     console.log('Stripe failed to load.');
+  //   }
+  // };
+  
 
   return (
     <>
@@ -209,7 +265,11 @@ const MDetailPage: FC = () => {
           <div className='flex justify-between'>
           <div className='flex bg-sky-400 dark:bg-cyan-700 w-28 h-7 text-white justify-center rounded-md'>
           <PlayIcon className='w-5'/>
-          <button className='font-semibold'>Play Now</button>
+          <button className='font-semibold'
+          // onClick={handlePayment}
+          >
+            Play Now
+            </button>
           </div>
           <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>Dark Matter
           on Apple TV+</a>

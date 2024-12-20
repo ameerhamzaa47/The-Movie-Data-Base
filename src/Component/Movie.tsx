@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import { addMoviesToDB, getMoviesFromDB, Movie, } from '../IDB Data/IDB';
-import { moviesData } from '../IDB Data/MovieData';
+// import { addMoviesToDB, getMoviesFromDB, Movie, } from '../IDB Data/IDB';
+// import { moviesData } from '../IDB Data/MovieData';
 import CircularRating from './RatingBar';
 import '../App.css'
 import Sliderbg from '../assets/image/Slider Bg.png'
 import { Link } from 'react-router-dom';
+
+export interface Movie {
+  id: number;
+  title: string;
+  releaseDate?: string;
+  imageUrl: string;
+  score: number;
+  overview: string;
+  genre: string[];
+  runtime: string;
+  videoUrl: string;
+  movieUrl: string;
+}
 
 const MovieCard: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -13,16 +26,34 @@ const MovieCard: React.FC = () => {
   const [active, setActive] = useState<"All" | "This Month">("All");
   const [loading, setLoading] = useState<boolean>(false);
 
+  // useEffect(() => {
+  //   // Store data in IndexedDB
+  //   addMoviesToDB(moviesData);
+  //   // Fetch data from IndexedDB
+  //   getMoviesFromDB().then((storedMovies: Movie[]) => {
+  //     setMovies(storedMovies);
+
+  //     setFilteredMovies(storedMovies);
+  //   });
+
+  // }, []);
+
   useEffect(() => {
-    // Store data in IndexedDB
-    addMoviesToDB(moviesData);
-    // Fetch data from IndexedDB
-    getMoviesFromDB().then((storedMovies: Movie[]) => {
-      setMovies(storedMovies);
+    const fetchAndStoreMovies = async () => {
+      try {
+        // Fetch movies from an API
+        const response = await fetch('http://localhost:5000/Movies');
+        const moviesData: Movie[] = await response.json();
 
-      setFilteredMovies(storedMovies);
-    });
+        
+        setMovies(moviesData);
+        setFilteredMovies(moviesData);
+      } catch (error) {
+        console.error('Error fetching and storing movies:', error);
+      }
+    };
 
+    fetchAndStoreMovies();
   }, []);
 
   const sliderSettings = {

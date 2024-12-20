@@ -11,6 +11,8 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
 // import { PlusIcon } from '@heroicons/react/16/solid';
 import ThemeToggle from './ThemeToggle';
 import profileIcon from '../assets/image/Profile.png'
+import { BellIcon } from '@heroicons/react/16/solid';
+import Notification from '../IDB Data/Notification';
 
 const Header: FC = () => {
   const [open, setOpen] = useState(false);
@@ -105,6 +107,7 @@ const Header: FC = () => {
             </div>
           )}
 
+
         </div>
 
 
@@ -144,57 +147,61 @@ const Header: FC = () => {
       </div>
 
 
+
+
       <div >
-
         {user?.email === 'hamzaataariq12@gmail.com' ?
-      <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
-        <img src={Add} className='w-6' alt="" />
-      </div>
-      {addOpen && (
-        <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
-        <li><Link to={'/addMovie'}>Add Movie</Link></li>
-        <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
-        </ul>
-      )}
-      </div>
-      : null  
-      }
-
-        {user  ?
-        <div className='flex gap-3 text-white'>
-
-          
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={user.photoURL || profileIcon} />
-              </div>
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
+              <img src={Add} className='w-6' alt="" />
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm text-black  dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow">
-              <li>
-                <a className="justify-between">
-                  {username ? username : user.displayName}
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a onClick={handleLogout}>Logout</a></li>
-            </ul>
+            {addOpen && (
+              <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
+                <li><Link to={'/addMovie'}>Add Movie</Link></li>
+                <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
+              </ul>
+            )}
           </div>
+          : null
+        }
+
+       <Notification/>
+
+        {user ?
+          <div className='flex gap-3 text-white'>
+
+
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Tailwind CSS Navbar component"
+                    src={user.photoURL || profileIcon} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm text-black  dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow">
+                <li>
+                  <Link to={`/u/${username ? username : user.displayName}`} className="justify-between">
+                    {username ? username : user.displayName}
+                    {/* <span className="badge">New</span> */}
+                  </Link>
+                </li>
+                <li><a>Settings</a></li>
+                <li className='block md:hidden'><ThemeToggle /></li>
+                <li><a onClick={handleLogout}>Logout</a></li>
+              </ul>
+            </div>
           </div>
           : <ul className='flex text-white font-semibold mx-0 md:mx-10'>
             <li><Link className='mx-0 md:mx-4' to={'/login'}>Login</Link></li>
             <li><Link className='mx-2 md:mx-4' to={'/register'}>Join</Link></li>
           </ul>
         }
-        <div className='flex items-center mx-5 text-white'>
-            <ThemeToggle/>
-          </div>
+        <div className='hidden md:flex items-center mx-5 text-white'>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )

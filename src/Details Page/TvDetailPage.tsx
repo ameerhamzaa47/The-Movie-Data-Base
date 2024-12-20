@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { addTVShowsToDB, getTVShowById, TVShow } from '../IDB Data/IDB';
+// import { addTVShowsToDB, getTVShowById, TVShow } from '../IDB Data/IDB';
+import { TVShow } from '../IDB Data/IDB';
 import { ListBulletIcon, HeartIcon, BookmarkIcon, PlayIcon } from '@heroicons/react/16/solid';
 import { Tooltip } from 'react-tooltip'
 import img1 from '../assets/Cast/Img_1.png'
@@ -12,7 +13,7 @@ import img6 from '../assets/Cast/Img_6.png'
 import img7 from '../assets/Cast/Img_7.png'
 import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
-import { tvShowsData } from '../IDB Data/TvShowData';
+// import { tvShowsData } from '../IDB Data/TvShowData';
 
 const TvDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
@@ -42,17 +43,30 @@ const TvDetailPage: FC = () => {
   const [tvShow, setTvShow] = useState<TVShow[]>([]);
 
   useEffect(() => {
-    // Store data in IndexedDB
-    addTVShowsToDB(tvShowsData);
-    // Fetch data from IndexedDB
+    const fetchMovieData = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/TVShows');
+        if (!res.ok) {
+          throw new Error('Failed to fetch movies');
+        }
+        const movies: TVShow[] = await res.json();
+  
+        // Find the movie with the matching ID from the fetched data
+        const foundMovie = movies.find((movie) => movie.id.toString() === id);
+        if (!foundMovie) {
+          throw new Error(`Movie with ID ${id} not found`);
+        }
+  
+        setTvShow([foundMovie]);
+      } catch (error) {
+        console.error('Failed to fetch movie data:', error);
+      }
+    };
+  
     if (id) {
-        getTVShowById(Number(id)).then((fetchedTvshow: any) => {
-        setTvShow([fetchedTvshow]);
-      });
+      fetchMovieData();
     }
-
   }, [id]);
-
   // rating bar
   interface RatingBarProps {
     value: number; // Percentage value (0-100)

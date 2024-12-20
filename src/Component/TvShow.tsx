@@ -1,8 +1,9 @@
 import { FC, useState, useEffect } from 'react'
 import Slider from 'react-slick';
 import Sliderbg from '../assets/image/Slider Bg.png'
-import { tvShowsData } from '../IDB Data/TvShowData';
-import {addTVShowsToDB, getTVShowsFromDB, TVShow  } from '../IDB Data/IDB';
+// import { tvShowsData } from '../IDB Data/TvShowData';
+// import {addTVShowsToDB, getTVShowsFromDB, TVShow  } from '../IDB Data/IDB';
+import { TVShow } from '../IDB Data/IDB';
 import CircularRating from './RatingBar';
 import { Link } from 'react-router-dom';
 
@@ -16,14 +17,17 @@ const TvShow:FC = () => {
   
   
   useEffect(() => {
-    // Store data in IndexedDB
-    addTVShowsToDB(tvShowsData);
-
-    // Fetch data from IndexedDB
-    getTVShowsFromDB().then((storedTVShows: TVShow[]) => {
-      setTVShows(storedTVShows);
-    });
-
+     const fetchAndStoreMovies = async () => {
+              try {
+                const response = await fetch('http://localhost:5000/TVShows');
+                const tvShowsData: TVShow[] = await response.json();
+                setTVShows(tvShowsData);
+              } catch (error) {
+                console.error('Error fetching and storing movies:', error);
+              }
+            };
+        
+            fetchAndStoreMovies();
   }, []);
 
   useEffect(() => {

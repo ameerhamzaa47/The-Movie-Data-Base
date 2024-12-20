@@ -73,7 +73,7 @@ const Slider: FC = () => {
             <div className="relative mt-5 w-full max-w-lg mx-auto">
               <input
                 type="search"
-                className="mt-3 outline-none w-full h-12 px-5 rounded-full dark:bg-[#021C31] dark:text-white dark:border dark:border-white dark:placeholder-white"
+                className="mt-3 outline-none w-full h-12 px-5 rounded-full dark:bg-[#021C31] text-black dark:text-white dark:border dark:border-white dark:placeholder-white"
                 placeholder="Search for a movie, TV show..."
               />
               <button

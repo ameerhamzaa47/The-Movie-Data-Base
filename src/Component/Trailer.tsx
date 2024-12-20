@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
-import {addTrailersToDB, getTrailersFromDB} from '../IDB Data/IDB';
+// import {addTrailersToDB, getTrailersFromDB} from '../IDB Data/IDB';
 import type { Trailer } from '../IDB Data/IDB';
-import { TrailersData } from '../IDB Data/TrailerData';
+// import { TrailersData } from '../IDB Data/TrailerData';
 import Slider from 'react-slick';
 
 const Trailer:FC = () => {
@@ -38,11 +38,20 @@ const Trailer:FC = () => {
 
   useEffect(() => {
     // Store data in IndexedDB
-    addTrailersToDB(TrailersData);
-
-    getTrailersFromDB().then((storedTrailers: Trailer[]) => {
-      setTrailers(storedTrailers);
-    });
+    const fetchAndStoreMovies = async () => {
+          try {
+            // Fetch movies from an API
+            const response = await fetch('http://localhost:5000/Trailer');
+            const TrailerData: Trailer[] = await response.json();
+    
+            
+            setTrailers(TrailerData);
+          } catch (error) {
+            console.error('Error fetching and storing movies:', error);
+          }
+        };
+    
+        fetchAndStoreMovies();
   }, []);
 
   const TrailersliderSettings ={

@@ -16,6 +16,7 @@ import TvDetailPage from './Details Page/TvDetailPage'
 import Forget_Password from './Auth/Forget_Password'
 import AddTVShow from './Add Videos/addTvShow'
 import NotFoundPage from './Component/NotFoundPage'
+import Profile from './Component/Profile'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path='/Tvdetail/:id' element={<TvDetailPage/>} />
         <Route path='/addMovie' element={<Protected cmp={AddMovies} />} />
         <Route path='/addTvShow' element={<Protected cmp={AddTVShow}/>} />
+        <Route path='/u/:name' element={<Profile/>} />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
       <ToastContainer />

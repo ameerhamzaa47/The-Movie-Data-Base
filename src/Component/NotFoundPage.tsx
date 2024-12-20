@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const NotFoundPage: FC = () => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center min-h-screen dark:bg-[#002C46] dark:text-white bg-gray-100">
             <h1 className="text-6xl font-bold text-red-600">404</h1>
-            <p className="mt-4 text-xl text-gray-700">Oops! The page you're looking for doesn't exist.</p>
+            <p className="mt-4 text-xl text-gray-700 dark:text-white">Oops! The page you're looking for doesn't exist.</p>
             <Link to="/" className="mt-6 text-lg text-blue-500 hover:underline">Go back to Home</Link>
         </div>
     );
