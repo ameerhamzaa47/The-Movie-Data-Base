@@ -47,6 +47,7 @@ const Register: FC = () => {
         username: data.UserName,
         email: data.Email,
         createdAt: new Date(),
+        
       });
 
       Navigate('/login');

@@ -13,7 +13,8 @@ import img6 from '../assets/Cast/Img_6.png'
 import img7 from '../assets/Cast/Img_7.png'
 import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
-// import { tvShowsData } from '../IDB Data/TvShowData';
+import { auth } from '../Auth/Firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const TvDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
@@ -41,6 +42,7 @@ const TvDetailPage: FC = () => {
   const { id } = useParams<{ id: string }>()
   console.log(id);
   const [tvShow, setTvShow] = useState<TVShow[]>([]);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -221,7 +223,9 @@ const TvDetailPage: FC = () => {
           <div className='flex justify-between'>
           <div className='flex bg-sky-400 dark:bg-cyan-700 w-28 h-7 text-white justify-center rounded-md'>
           <PlayIcon className='w-5'/>
-          <button className='font-semibold'>Play Now</button>
+          <button className='font-semibold' onClick={() => handleVideoClick(tvShow[0].videoUrl)} data-tooltip-id='my-tooltip' data-tooltip-content={!user ? 'Subscribe for Watch':''} disabled={!user}>
+            Play Now
+          </button>
           </div>
           <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>Dark Matter
           on Apple TV+</a>
