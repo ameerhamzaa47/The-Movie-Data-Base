@@ -42,7 +42,7 @@ const MovieCard: React.FC = () => {
     const fetchAndStoreMovies = async () => {
       try {
         // Fetch movies from an API
-        const response = await fetch('https://the-movie-data-base-gamma.vercel.app/api/movies');
+        const response = await fetch('https://the-movie-data-base-gamma.vercel.app/Api/movies');
         const moviesData: Movie[] = await response.json();
 
         
