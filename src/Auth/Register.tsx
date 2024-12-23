@@ -46,7 +46,6 @@ const Register: FC = () => {
         roleId:2,
         username: data.UserName,
         email: data.Email,
-        password: data.Password,
         createdAt: new Date(),
       });
 

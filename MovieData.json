@@ -34,7 +34,7 @@
       "movieUrl": "https://www.netflix.com/in/title/81004270"
     },
     {
-      "title": "The Red Virgin f",
+      "title": "The Red Virgin",
       "runtime": "1h 54m",
       "releaseDate": "Sep 27, 2024",
       "genre": [
@@ -43,10 +43,10 @@
         "Thriller"
       ],
       "score": 71,
-      "imageUrl": "/DataImage/Movie/poster_3.png",
       "videoUrl": "https://youtu.be/yIBvbxTj0i0",
       "movieUrl": "https://www.netflix.com/in/title/81004270",
       "overview": "A different movie with a thrilling plot.",
+      "imageUrl": "/DataImage/Movie/poster_3.png",
       "id": "3"
     },
     {

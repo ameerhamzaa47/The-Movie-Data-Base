@@ -10,10 +10,9 @@ const stripePromise = loadStripe("pk_test_51QPfwVABp1KJlVmplqeMwqN8TLAjkI0fJy2bh
 const PaymentPage: FC = () => {
   return (
     <Elements stripe={stripePromise}>
-        <div className="w-full h-screen">
-<Payment />
-        </div>
-     
+      <div className="w-full h-screen">
+        <Payment />
+      </div>
     </Elements>
   );
 };

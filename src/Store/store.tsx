@@ -16,14 +16,15 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import commentsReducer from '../Reducer/CommentsSlice'
+import userReducer from '../Reducer/Faviort_List'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     comments: commentsReducer,
+    user: userReducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export default store;
