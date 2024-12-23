@@ -1,33 +1,29 @@
-import jsonServer from 'json-server';
+import { promises as fs } from 'fs';
 import path from 'path';
 
-const server = jsonServer.create();
-const router = jsonServer.router(path.join(__dirname, '../public/MovieData.json'));  // Adjust path to where MovieData.json is located in the public folder
-const middlewares = jsonServer.defaults();
+export default async function handler(req, res) {
+  try {
+    // Read the MovieData.json file from the api directory
+    const filePath = path.join(process.cwd(), 'api', 'MovieData.json');
+    const data = await fs.readFile(filePath, 'utf-8');
+    const jsonData = JSON.parse(data);
 
-// Add middlewares (logging, static, CORS, etc.)
-server.use(middlewares);
-
-// Define custom routes for Movies, TV Shows, and Trailers
-server.get('/api/movies', (req, res) => {
-  const db = router.db;  // Access the in-memory database
-  const movies = db.get('Movies').value();  // Get movies data
-  res.jsonp(movies);
-});
-
-server.get('/api/tvshows', (req, res) => {
-  const db = router.db;
-  const tvShows = db.get('TVShows').value();  // Get TV shows data
-  res.jsonp(tvShows);
-});
-
-server.get('/api/trailers', (req, res) => {
-  const db = router.db;
-  const trailers = db.get('Trailers').value();  // Get trailers data
-  res.jsonp(trailers);
-});
-
-// Serve all routes (default JSON server functionality)
-server.use(router);
-
-export default server;
+    // Handle different API routes
+    if (req.method === 'GET') {
+      if (req.url.includes('/api/movies')) {
+        res.status(200).json(jsonData.Movies); // Return Movies data
+      } else if (req.url.includes('/api/tvshows')) {
+        res.status(200).json(jsonData.TVShows); // Return TV Shows data
+      } else if (req.url.includes('/api/trailers')) {
+        res.status(200).json(jsonData.Trailers); // Return Trailers data
+      } else {
+        res.status(404).json({ message: 'Not Found' });
+      }
+    } else {
+      res.status(405).json({ message: 'Method Not Allowed' });
+    }
+  } catch (error) {
+    console.error('Error reading MovieData.json:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
