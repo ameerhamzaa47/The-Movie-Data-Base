@@ -20,7 +20,6 @@ import Profile from './Component/Profile'
 import AdminLogin from './Admin Pannel/AdminLogin'
 import Admin from './Admin Pannel/Admin'
 import AdminProtected from './Admin Pannel/AdminProtected'
-import Update from './Admin Pannel/UpdateMovie'
 import UpdateMovie from './Admin Pannel/UpdateMovie'
 import PaymentPage from './Component/PaymentPage'
 

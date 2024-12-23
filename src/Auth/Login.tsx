@@ -44,7 +44,7 @@ const Login: FC = () => {
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
+       await signInWithPopup(auth, provider);
       toast.success('Login with Google successful!');
       navigate('/');
     } catch (error) {
