@@ -2,7 +2,7 @@ import jsonServer from 'json-server';
 import path from 'path';
 
 const server = jsonServer.create();
-const router = jsonServer.router(path.resolve('MovieData.json'));  // Use absolute path for db.json
+const router = jsonServer.router(path.join(__dirname, '../public/MovieData.json'));  // Adjust path to where MovieData.json is located in the public folder
 const middlewares = jsonServer.defaults();
 
 // Add middlewares (logging, static, CORS, etc.)
