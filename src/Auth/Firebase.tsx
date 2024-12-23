@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection, addDoc} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,3 +21,22 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { auth, db, createUserWithEmailAndPassword, setDoc, doc };
+
+// Function to add a comment for the logged-in user
+const addCommentToFirestore = async (uid: string, commentText: string) => {
+  if (!uid || !commentText) return;
+
+  try {
+    const db = getFirestore();
+    const commentsRef = collection(db, "users", uid, "comments");
+    await addDoc(commentsRef, {
+      text: commentText,
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    console.error("Error adding comment: ", error);
+  }
+};
+
+export { addCommentToFirestore };
+

@@ -10,13 +10,19 @@ import Protected from './Component/Protected'
 import Home from './Component/Home'
 import { ThemeProvider } from './Context/ThemeProvider'
 import ErrorBoundary from './Component/ErrorBoundries'
-import AddMovies from './Add Videos/addMovies'
+import AddMovies from './Admin Pannel/addMovies'
 import MDetailPage from './Details Page/MDetailPage'
 import TvDetailPage from './Details Page/TvDetailPage'
 import Forget_Password from './Auth/Forget_Password'
-import AddTVShow from './Add Videos/addTvShow'
+import AddTVShow from './Admin Pannel/addTvShow'
 import NotFoundPage from './Component/NotFoundPage'
 import Profile from './Component/Profile'
+import AdminLogin from './Admin Pannel/AdminLogin'
+import Admin from './Admin Pannel/Admin'
+import AdminProtected from './Admin Pannel/AdminProtected'
+import Update from './Admin Pannel/UpdateMovie'
+import UpdateMovie from './Admin Pannel/UpdateMovie'
+import PaymentPage from './Component/PaymentPage'
 
 
 function App() {
@@ -37,7 +43,11 @@ function App() {
         <Route path='/Tvdetail/:id' element={<TvDetailPage/>} />
         <Route path='/addMovie' element={<Protected cmp={AddMovies} />} />
         <Route path='/addTvShow' element={<Protected cmp={AddTVShow}/>} />
+        <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/u/:name' element={<Profile/>} />
+        <Route path='/admin' element={<AdminLogin/>} />
+        <Route path='/adminPannel' element={<AdminProtected cmp={Admin}/>} />
+        <Route path='/update/:id' element={<AdminProtected cmp={UpdateMovie}/>} />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
       <ToastContainer />

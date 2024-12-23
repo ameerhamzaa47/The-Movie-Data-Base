@@ -26,32 +26,28 @@
 
 // export default Notification
 
-
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { BellIcon } from '@heroicons/react/16/solid';
-import { channel } from './Ably';
+import { FC } from 'react';
+import { io } from 'socket.io-client';
 
-const Notification = () => {
-  const [notifications, setNotifications] = useState<{ id: number; title: string }[]>([]);
-  
-  // Ref to store already processed movie IDs to avoid duplicates
-  const processedMovieIds = useRef<Set<number>>(new Set());
+// Create a socket connection to the server
+const socket = io('http://localhost:3000'); // Ensure the correct port is used for your backend server
 
+const Notification: FC = () => {
+  const [notifications, setNotifications] = useState<string[]>([]);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+
+  // Listen for new notifications
   useEffect(() => {
-    // Subscribe to the 'movie-added' event
-    channel.subscribe('movie-added', (message) => {
-      const { id, title } = message.data;
-
-      // Avoid adding duplicates
-      if (!processedMovieIds.current.has(id)) {
-        setNotifications((prev) => [...prev, { id, title }]);
-        processedMovieIds.current.add(id); // Mark this movie as processed
-      }
+    socket.on('new-movie', (data) => {
+      setNotifications((prev) => [data.message, ...prev]);
+      setUnreadCount((prev) => prev + 1);
     });
 
-    // Cleanup subscription on component unmount
+    // Cleanup on component unmount
     return () => {
-      channel.unsubscribe('movie-added');
+      socket.off('new-movie');
     };
   }, []);
 
@@ -60,22 +56,25 @@ const Notification = () => {
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle relative">
           <BellIcon className="h-6 w-6 mr-3 cursor-pointer text-white" />
-          <span className="absolute top-1 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-            {notifications.length}
-          </span>
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {unreadCount}
+            </span>
+          )}
         </div>
         <div
           tabIndex={0}
           className="menu menu-sm my-2 cursor-pointer text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow"
         >
-          {notifications.length === 0 ? (
-            <p className="p-2">No notifications</p>
-          ) : (
+          {notifications.length > 0 ? (
             notifications.map((notification, index) => (
-              <p key={index} className="hover:bg-gray-200 rounded-lg p-2">
-                {notification.title}
-              </p>
+              <div key={index}>
+                <p className="hover:bg-gray-200 rounded-lg p-2">{notification}</p>
+                {index < notifications.length - 1 && <hr />}
+              </div>
             ))
+          ) : (
+            <p className="text-center p-2">No notifications yet</p>
           )}
         </div>
       </div>
@@ -84,6 +83,8 @@ const Notification = () => {
 };
 
 export default Notification;
+
+
 
 
 

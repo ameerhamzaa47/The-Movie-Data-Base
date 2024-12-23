@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TVShow } from '../IDB Data/IDB';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -47,11 +49,18 @@ const AddTVShow: FC = () => {
   
     // Handling file upload and URL creation for poster image
     const posterFile = data.Poster[0];
+
+    // Create a FormData to send the image to Cloudinary
+    const formData = new FormData();
+    formData.append('file', posterFile);
+    formData.append('upload_preset', 'TVShow Image');
+    formData.append('folder', 'Home/tvShows');
   
     // Save the file itself in IndexedDB
     const reader = new FileReader();
     reader.onloadend = async () => {
-      const imageUrl = reader.result as string;
+        const response = await axios.post('https://api.cloudinary.com/v1_1/dlc8zsx7m/image/upload', formData);
+        const imageUrl = response.data.secure_url; 
       
       const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
   
@@ -83,11 +92,11 @@ const AddTVShow: FC = () => {
           throw new Error('Failed to add TV Show to server');
         }
   
-        alert('TV Show Added Successfully');
-        navigate('/');
+        toast.success('TV Show Added Successfully');
+        navigate('/adminPannel');
       } catch (error) {
         console.error('Error adding TV Show to IndexedDB or server', error);
-        alert('Failed to add TV Show');
+        toast.error('Failed to add TV Show');
       }
     };
   

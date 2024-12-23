@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { auth } from './Firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -27,7 +27,7 @@ const Login: FC = () => {
     }
   }, [user, navigate])
 
-  
+
 
   const onSubmit = async (data: any) => {
     try {
@@ -37,6 +37,18 @@ const Login: FC = () => {
 
     } catch (error) {
       toast.error('Invalid username or password. Please try again.');
+    }
+  };
+
+  // Google sign-in function
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      toast.success('Login with Google successful!');
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to login with Google. Please try again.');
     }
   };
 
@@ -59,7 +71,7 @@ const Login: FC = () => {
               type="email"
             />
             {errors.Email && <p className='text-red-500'>{errors.Email.message}</p>}
-            </div>
+          </div>
 
           <div className='flex flex-col my-2'>
             <label className='font-semibold'>Password</label>
@@ -76,12 +88,16 @@ const Login: FC = () => {
             <Link to={'/forgot-password'} className='text-cyan-500 font-medium hover:underline'>Forgot Password?</Link>
           </div>
 
-            <button className='bg-zinc-200 w-full dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
-              Login
-            </button>
+          <button className='bg-zinc-200 w-full dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
+            Login
+          </button>
         </form>
+
+        <button onClick={loginWithGoogle} className='bg-zinc-200 w-96 dark:bg-cyan-800 p-2 mt-3 rounded-lg transition-all font-semibold hover:text-white hover:bg-cyan-600 cursor-pointer'>
+          Login With Google
+        </button>
       </div>
-      </>
+    </>
   );
 };
 

@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-// import { addMoviesToDB, getMoviesFromDB } from '../IDB Data/IDB';
+import axios from 'axios';
 import 'firebase/storage';
 import { Movie } from '../IDB Data/IDB';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -27,10 +28,10 @@ const AddMovies: FC = () => {
 
   // Generate Next ID
   const getNextId = async () => {
-  const response = await fetch('http://localhost:5000/Movies');
-        const movies = await response.json();
-        const maxId = movies.length > 0 ? Math.max(...movies.map((movie: Movie) => movie.id)) : 0;
-        return maxId + 1;
+    const response = await fetch('http://localhost:5000/Movies');
+    const movies = await response.json();
+    const maxId = movies.length > 0 ? Math.max(...movies.map((movie: Movie) => movie.id)) : 0;
+    return maxId + 1;
   }
 
   const onSubmit = async (data: any) => {
@@ -49,10 +50,14 @@ const AddMovies: FC = () => {
     // Handling file upload and URL creation for poster image
     const posterFile = data.Poster[0];
   
-    // Save the file itself in IndexedDB
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const imageUrl = reader.result as string;
+    const formData = new FormData();
+    formData.append('file', posterFile); // Append the file
+    formData.append('upload_preset', 'Movie Image'); // Your upload preset (see Cloudinary settings)
+    
+    try {
+      // Upload the image to Cloudinary
+      const response = await axios.post('https://api.cloudinary.com/v1_1/dlc8zsx7m/image/upload', formData);
+      const imageUrl = response.data.secure_url;  // Get the URL of the uploaded image
       
       const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
   
@@ -70,7 +75,7 @@ const AddMovies: FC = () => {
       };
   
       try {
-        const response = await fetch('http://localhost:5000/Movies', {
+        const dbResponse = await fetch('http://localhost:5000/Movies', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -78,19 +83,20 @@ const AddMovies: FC = () => {
           body: JSON.stringify(newMovie),
         });
   
-        if (!response.ok) {
+        if (!dbResponse.ok) {
           throw new Error('Failed to add movie to server');
         }
   
-        alert('Movie Added Successfully');
-        navigate('/');
+        toast.success('Movie Added Successfully');
+        navigate('/adminPannel');
       } catch (error) {
         console.error(error);
-        alert('Failed to add movie');
+        toast.error('Failed to add movie');
       }
-    };
-  
-    reader.readAsDataURL(posterFile);
+    } catch (error) {
+      console.error('Error uploading to Cloudinary:', error);
+      alert('Failed to upload image to Cloudinary');
+    }
   };
   
 
@@ -156,7 +162,7 @@ const AddMovies: FC = () => {
             type="number"
           />
           {errors.score && <p className='text-red-500'>{errors.score.message}</p>}
-          </div>
+        </div>
 
         <div className='flex flex-col my-2'>
           <label className='font-semibold'>Poster</label>
@@ -189,7 +195,7 @@ const AddMovies: FC = () => {
             placeholder='Movie Link...'
             type="text"
           />
-          </div>
+        </div>
 
         <div className='flex flex-col my-2'>
           <label className='font-semibold'>Overview</label>
