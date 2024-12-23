@@ -41,7 +41,7 @@ const Trailer:FC = () => {
     const fetchAndStoreMovies = async () => {
           try {
             // Fetch movies from an API
-            const response = await fetch('https://the-movie-data-base-gamma.vercel.app/api/trailers');
+            const response = await fetch('https://the-movie-data-base-gamma.vercel.app/api/movies?type=trailers');
             const TrailerData: Trailer[] = await response.json();
     
             

@@ -19,7 +19,7 @@ const TvShow:FC = () => {
   useEffect(() => {
      const fetchAndStoreMovies = async () => {
               try {
-                const response = await fetch('https://the-movie-data-base-gamma.vercel.app/api/tvshows');
+                const response = await fetch('https://the-movie-data-base-gamma.vercel.app/api/movies?type=tvshows');
                 const tvShowsData: TVShow[] = await response.json();
                 setTVShows(tvShowsData);
               } catch (error) {
