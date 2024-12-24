@@ -20,10 +20,12 @@ const Header: FC = () => {
   const [submenuTVShows, setSubmenuTVShows] = useState(false);
   const [submenuPeople, setSubmenuPeople] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
+  const [adimnId, setAdminId] = useState<number | null>(null);
 
   const [user] = useAuthState(auth);
   const Navigate = useNavigate();
 
+  
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -32,6 +34,7 @@ const Header: FC = () => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           setUsername(userDoc.data()?.username);
+          setAdminId(userDoc.data()?.roleId);
         } else {
           console.log("No such document!");
         }
@@ -41,6 +44,7 @@ const Header: FC = () => {
     fetchUserName();
   }, [user]);
 
+  
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -50,6 +54,9 @@ const Header: FC = () => {
       toast.error('Error logging out');
     }
   };
+
+  console.log('djd', adimnId);
+  
 
   return (
     <header className="navbar bg-[#021C31]  flex justify-between">
@@ -149,18 +156,11 @@ const Header: FC = () => {
 
 
       <div >
-        {user?.email === 'hamzaataariq12@gmail.com' ?
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" onClick={() => setaddOpen(!addOpen)}>
+
+        {adimnId === 1 ?
+            <Link to={'/adminPannel'} tabIndex={0} role="button" className="btn btn-ghost btn-circle">
               <img src={Add} className='w-6' alt="" />
-            </div>
-            {addOpen && (
-              <ul tabIndex={0} className="menu menu-sm text-black dark:text-white dark:bg-black dropdown-content bg-base-100 rounded-box z-20 mt-3 w-36 p-2 shadow">
-                <li><Link to={'/addMovie'}>Add Movie</Link></li>
-                <li><Link to={'/addTvShow'}>Add TV Show</Link></li>
-              </ul>
-            )}
-          </div>
+            </Link>
           : null
         }
 

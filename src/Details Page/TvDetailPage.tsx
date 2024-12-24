@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 // import { addTVShowsToDB, getTVShowById, TVShow } from '../IDB Data/IDB';
 import { TVShow } from '../IDB Data/IDB';
 import { ListBulletIcon, HeartIcon, BookmarkIcon, PlayIcon } from '@heroicons/react/16/solid';
@@ -15,10 +15,12 @@ import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
 import { auth } from '../Auth/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 const TvDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [paidStatus, setPaidStatus] = useState<boolean | string>(false);
 
   const getYouTubeVideoId = (url: string): string => {
     const match = url.match(
@@ -69,6 +71,23 @@ const TvDetailPage: FC = () => {
       fetchMovieData();
     }
   }, [id]);
+
+  useEffect(() => {
+      const fetchUserPaidStatus = async () => {
+        if (user) {
+          const userDocRef = doc(getFirestore(), "users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            setPaidStatus(userDoc.data()?.isSubscribed);
+          } else {
+            console.log("No such document!");
+          }
+        }
+      };
+  
+      fetchUserPaidStatus();
+    }, [user]);
+    
   // rating bar
   interface RatingBarProps {
     value: number; // Percentage value (0-100)
@@ -220,15 +239,24 @@ const TvDetailPage: FC = () => {
 
         <div className='md:w-1/3 w-full shadow-left rounded-xl  p-4  dark:border-cyan-400  mt-10 dark:bg-gray-900 md:mt-0'>
         {/* play button */}
-          <div className='flex justify-between'>
-          <div className='flex bg-sky-400 dark:bg-cyan-700 w-28 h-7 text-white justify-center rounded-md'>
-          <PlayIcon className='w-5'/>
-          <button className='font-semibold' onClick={() => handleVideoClick(tvShow[0].videoUrl)} data-tooltip-id='my-tooltip' data-tooltip-content={!user ? 'Subscribe for Watch':''} disabled={!user}>
-            Play Now
-          </button>
-          </div>
-          <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>Dark Matter
-          on Apple TV+</a>
+        <div className='flex justify-between'>
+            <div
+              data-tooltip-id='my-tooltip'
+              data-tooltip-content={!paidStatus ? 'Subscribe for Watch' : ''}
+              className={`flex dark:bg-cyan-700 h-7 text-white justify-center rounded-md  ${!paidStatus ? 'bg-red-500 w-32' : 'bg-sky-400 w-28'}`}
+            >
+              <PlayIcon className='w-5' />
+              {tvShow.length > 0 && (
+                paidStatus ? (
+                  <button onClick={() => handleVideoClick(tvShow[0].videoUrl)} className='font-semibold'>Play Now</button>
+                ) : (
+                  <Link to={'/Payment'} className='font-semibold mt-1'>Subscribe Now</Link>
+                )
+              )}
+            </div>
+            <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>
+              Dark Matter on Apple TV+
+            </a>
           </div>
 
 {/* Social Link */}

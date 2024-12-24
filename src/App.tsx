@@ -17,9 +17,7 @@ import Forget_Password from './Auth/Forget_Password'
 import AddTVShow from './Admin Pannel/addTvShow'
 import NotFoundPage from './Component/NotFoundPage'
 import Profile from './Component/Profile'
-import AdminLogin from './Admin Pannel/AdminLogin'
 import Admin from './Admin Pannel/Admin'
-import AdminProtected from './Admin Pannel/AdminProtected'
 import UpdateMovie from './Admin Pannel/UpdateMovie'
 import PaymentPage from './Component/PaymentPage'
 
@@ -44,9 +42,8 @@ function App() {
         <Route path='/addTvShow' element={<Protected cmp={AddTVShow}/>} />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/u/:name' element={<Profile/>} />
-        <Route path='/admin' element={<AdminLogin/>} />
-        <Route path='/adminPannel' element={<AdminProtected cmp={Admin}/>} />
-        <Route path='/update/:id' element={<AdminProtected cmp={UpdateMovie}/>} />
+        <Route path='/adminPannel' element={<Admin/>} />
+        <Route path='/update/:id' element={<UpdateMovie/>} />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
       <ToastContainer />

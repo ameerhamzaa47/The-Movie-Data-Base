@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {ArrowRightStartOnRectangleIcon, PlusCircleIcon} from "@heroicons/react/16/solid"
+import { Link } from "react-router-dom";
+import {PlusCircleIcon} from "@heroicons/react/16/solid"
 import { Movie } from "../Component/Movie";
 import { TVShow } from "../IDB Data/IDB";
 import { Tooltip } from "react-tooltip";
@@ -8,12 +8,6 @@ import { Tooltip } from "react-tooltip";
 const Admin: FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [tvShows, setTVShows] = useState<TVShow[]>([]);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('admin');
-    navigate('/admin');
-  };
 
   // Fetch movies
   useEffect(() => {
@@ -76,7 +70,6 @@ const Admin: FC = () => {
   return (
     <>
       <h1 className="text-2xl font-bold text-center mt-5">Admin Panel</h1>
-      <ArrowRightStartOnRectangleIcon className="text-end absolute right-5 top-24 w-10 text-red-600 font-bold cursor-pointer" onClick={handleLogout}/>
 
       <div className="flex flex-col md:flex-row justify-between mx-10 h-screen py-10">
         {/* Movie */}

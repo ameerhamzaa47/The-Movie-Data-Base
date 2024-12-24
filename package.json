@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"vite\" \"json-server --watch MovieData.json --port $PORT\"",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -21,7 +22,6 @@
     "ably": "^2.6.0",
     "axios": "^1.7.9",
     "body-parser": "^1.20.3",
-    "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "firebase": "^11.1.0",
@@ -62,6 +62,7 @@
     "@types/swiper": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
     "daisyui": "^4.12.14",
     "eslint": "^9.15.0",
     "eslint-plugin-react-hooks": "^5.0.0",

@@ -327,7 +327,7 @@
 
 
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 // import { moviesData } from '../IDB Data/MovieData';
 // import { addMoviesToDB, getMovieById, Movie } from '../IDB Data/IDB';
 // import { Elements } from "@stripe/react-stripe-js";
@@ -345,6 +345,7 @@ import prime from '../assets/image/prime_Video.png'
 import Discussion from '../Component/Discussion';
 import { auth } from '../Auth/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 
 export interface Movie {
@@ -363,6 +364,7 @@ export interface Movie {
 const MDetailPage: FC = () => {
   // const [movies, setTrailers] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [paidStatus, setPaidStatus] = useState<boolean | string>(false);
 
   const getYouTubeVideoId = (url: string): string => {
     const match = url.match(
@@ -388,31 +390,48 @@ const MDetailPage: FC = () => {
   const [user] = useAuthState(auth);
 
 
-useEffect(() => {
-  const fetchMovieData = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/Movies');
-      if (!res.ok) {
-        throw new Error('Failed to fetch movies');
-      }
-      const movies: Movie[] = await res.json();
+  useEffect(() => {
+    const fetchMovieData = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/Movies');
+        if (!res.ok) {
+          throw new Error('Failed to fetch movies');
+        }
+        const movies: Movie[] = await res.json();
 
-      // Find the movie with the matching ID from the fetched data
-      const foundMovie = movies.find((movie) => movie.id.toString() === id);
-      if (!foundMovie) {
-        throw new Error(`Movie with ID ${id} not found`);
-      }
+        // Find the movie with the matching ID from the fetched data
+        const foundMovie = movies.find((movie) => movie.id.toString() === id);
+        if (!foundMovie) {
+          throw new Error(`Movie with ID ${id} not found`);
+        }
 
-      setMovies([foundMovie]);
-    } catch (error) {
-      console.error('Failed to fetch movie data:', error);
+        setMovies([foundMovie]);
+      } catch (error) {
+        console.error('Failed to fetch movie data:', error);
+      }
+    };
+
+    if (id) {
+      fetchMovieData();
     }
-  };
+  }, [id]);
 
-  if (id) {
-    fetchMovieData();
-  }
-}, [id]);
+  useEffect(() => {
+    const fetchUserPaidStatus = async () => {
+      if (user) {
+        const userDocRef = doc(getFirestore(), "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setPaidStatus(userDoc.data()?.isSubscribed);
+        } else {
+          console.log("No such document!");
+        }
+      }
+    };
+
+    fetchUserPaidStatus();
+  }, [user]);
+
 
   // rating bar
   interface RatingBarProps {
@@ -560,60 +579,70 @@ useEffect(() => {
       <div className='flex flex-col md:flex-row justify-between mx-5'>
 
         <div className='flex overflow-x-auto scrollbar-hide w-full mx-6'>
-          <Cast name={'Ben Whishaw'} type={'Sam Young'} image={img1}/>
-          <Cast name={'Andrew Buchan'} type={'Wallace'} image={img2}/>
-          <Cast name={'Andrew Koji'} type={'Jason'} image={img3}/>
-          <Cast name={'Sam Troughton'} type={'Stephen Yarrick'} image={img4}/>
-          <Cast name={'Sarah Lancashire'} type={'Mrs. Reed'} image={img5}/>
-          <Cast name={'Keira Knightley'} type={'Helen Webb'} image={img6}/>
-          <Cast name={'Omari Douglas'} type={'Michael'} image={img7}/>
-          <Cast name={'Ella Lily Hyland'} type={'Williams'} image={img8}/>
+          <Cast name={'Ben Whishaw'} type={'Sam Young'} image={img1} />
+          <Cast name={'Andrew Buchan'} type={'Wallace'} image={img2} />
+          <Cast name={'Andrew Koji'} type={'Jason'} image={img3} />
+          <Cast name={'Sam Troughton'} type={'Stephen Yarrick'} image={img4} />
+          <Cast name={'Sarah Lancashire'} type={'Mrs. Reed'} image={img5} />
+          <Cast name={'Keira Knightley'} type={'Helen Webb'} image={img6} />
+          <Cast name={'Omari Douglas'} type={'Michael'} image={img7} />
+          <Cast name={'Ella Lily Hyland'} type={'Williams'} image={img8} />
         </div>
 
         <div className='md:w-1/3 w-full shadow-left rounded-xl  p-4  dark:border-cyan-400  mt-10 dark:bg-gray-900 md:mt-0'>
-        {/* play button */}
+          {/* play button */}
           <div className='flex justify-between'>
-          <div className='flex bg-sky-400 dark:bg-cyan-700 w-28 h-7 text-white justify-center rounded-md'>
-          <PlayIcon className='w-5'/>
-          {movies.length > 0 && (
-            <button onClick={() => handleVideoClick(movies[0].videoUrl)} className='font-semibold' data-tooltip-id='my-tooltip' data-tooltip-content={!user ? 'Subscribe for Watch':''} disabled={!user}>Play Now</button>
-          )}
-          </div>
-          <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>Dark Matter
-          on Apple TV+</a>
+            <div
+              data-tooltip-id='my-tooltip'
+              data-tooltip-content={!paidStatus ? 'Subscribe for Watch' : ''}
+              className={`flex dark:bg-cyan-700 h-7 text-white justify-center rounded-md  ${!paidStatus ? 'bg-red-500 w-32' : 'bg-sky-400 w-28'}`}
+            >
+              <PlayIcon className='w-5' />
+              {movies.length > 0 && (
+                paidStatus ? (
+                  <button onClick={() => handleVideoClick(movies[0].videoUrl)} className='font-semibold'>Play Now</button>
+                ) : (
+                  <Link to={'/Payment'} className='font-semibold mt-1'>Subscribe Now</Link>
+                )
+              )}
+            </div>
+            <a href='https://shorturl.at/AuBJg' target='_blank' className='w-24 mr-10'>
+              Dark Matter on Apple TV+
+            </a>
           </div>
 
-{/* Social Link */}
+
+          {/* Social Link */}
           <div className='mt-5'>
-          <a href="https://twitter.com" target='_blank'><i className="fa-brands fa-twitter text-2xl mx-3 cursor-pointer dark:text-cyan-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Twitter"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.instagram.com" target='_blank'><i className="fa-brands fa-instagram text-2xl mx-3 cursor-pointer dark:text-pink-500" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Instagram"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.justwatch.com/pk/tv-show/secret-level" target='_blank'><i className="fa-solid fa-play text-2xl mx-3 cursor-pointer dark:text-yellow-300" data-tooltip-id="my-tooltip" data-tooltip-content="Visit JustWatch"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.amazon.com/dp/B0DJPRYRDL" target='_blank'><i className="fa-solid fa-link text-2xl mx-3 cursor-pointer dark:text-green-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Homepage"></i></a>
-          <Tooltip id='my-tooltip'/>
+            <a href="https://twitter.com" target='_blank'><i className="fa-brands fa-twitter text-2xl mx-3 cursor-pointer dark:text-cyan-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Twitter"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.instagram.com" target='_blank'><i className="fa-brands fa-instagram text-2xl mx-3 cursor-pointer dark:text-pink-500" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Instagram"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.justwatch.com/pk/tv-show/secret-level" target='_blank'><i className="fa-solid fa-play text-2xl mx-3 cursor-pointer dark:text-yellow-300" data-tooltip-id="my-tooltip" data-tooltip-content="Visit JustWatch"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.amazon.com/dp/B0DJPRYRDL" target='_blank'><i className="fa-solid fa-link text-2xl mx-3 cursor-pointer dark:text-green-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Homepage"></i></a>
+            <Tooltip id='my-tooltip' />
           </div>
 
-{/* facts, Status */}
+          {/* facts, Status */}
           <div className='mt-5 mx-2 font-bold text-sm'>
-          <p>Facts</p>
-          <p>Status</p>
-          <span className='font-light'>Returning Series</span>
+            <p>Facts</p>
+            <p>Status</p>
+            <span className='font-light'>Returning Series</span>
 
-          <p className='mt-5'>Network</p>
-          <img src={prime} className='w-28' alt="" />
+            <p className='mt-5'>Network</p>
+            <img src={prime} className='w-28' alt="" />
 
-          <p className='mt-5'>Type</p>
-          <span className='font-light'>Scripted</span>
+            <p className='mt-5'>Type</p>
+            <span className='font-light'>Scripted</span>
 
-          <p className='mt-5'>Original Language</p>
-          <span className='font-light'>English</span>
+            <p className='mt-5'>Original Language</p>
+            <span className='font-light'>English</span>
           </div>
         </div>
 
       </div>
-<Discussion/>
+      <Discussion />
     </>
   )
 }

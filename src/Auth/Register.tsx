@@ -46,8 +46,8 @@ const Register: FC = () => {
         roleId:2,
         username: data.UserName,
         email: data.Email,
+        isSubscribed: false,
         createdAt: new Date(),
-        
       });
 
       Navigate('/login');
