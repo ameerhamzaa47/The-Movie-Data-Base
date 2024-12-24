@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"vite\" \"json-server --watch MovieData.json --port $PORT\"",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "json-server --watch MovieData.json --port 5000",
+    "server": "json-server --watch MovieData.json --host 0.0.0.0 --port $PORT",
     "both": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
