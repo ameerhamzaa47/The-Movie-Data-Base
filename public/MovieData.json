@@ -1,0 +1,774 @@
+{
+  "Movies": [
+    {
+      "id": "1",
+      "title": "Black Doves",
+      "releaseDate": "Dec 05, 2024",
+      "imageUrl": "/DataImage/Movie/poster_1.png",
+      "score": 79,
+      "overview": "When a spy posing as a politician's wife learns her lover has been murdered, an old assassin friend joins her on a quest for truth — and vengeance.",  
+      "genre": [
+        "Mystery",
+        "Crime",
+        "Action",
+        "Adventure"
+      ],
+      "runtime": "1h 23m",
+      "videoUrl": "https://youtu.be/shzJzjVscno",
+      "movieUrl": "https://youtu.be/shzJzjVscno"
+    },
+    {
+      "id": "2",
+      "title": "Mary",
+      "releaseDate": "Dec 05, 2024",
+      "imageUrl": "/DataImage/Movie/poster_2.png",
+      "score": 62,
+      "overview": "A miraculous conception. A merciless king. A murderous pursuit. Mary's journey to give birth to Jesus unfolds in this biblical coming-of-age epic.",
+      "genre": [
+        "Drama",
+        "History",
+        "Action"
+      ],
+      "runtime": "1h 50m",
+      "videoUrl": "https://youtu.be/d74vHvsACSs",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "title": "The Red Virgin",
+      "runtime": "1h 54m",
+      "releaseDate": "Sep 27, 2024",
+      "genre": [
+        "Drama",
+        "History",
+        "Thriller"
+      ],
+      "score": 71,
+      "videoUrl": "https://youtu.be/yIBvbxTj0i0",
+      "movieUrl": "https://www.netflix.com/in/title/81004270",
+      "overview": "A different movie with a thrilling plot.",
+      "imageUrl": "/DataImage/Movie/poster_3.png",
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "title": "That Christmas",
+      "releaseDate": "Dec 04, 2024",
+      "imageUrl": "/DataImage/Movie/poster_4.png",
+      "score": 72,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Animation",
+        "Comedy",
+        "Family",
+        "Fantasy",
+        "Adventure"
+      ],
+      "runtime": "1h 31m",
+      "videoUrl": "https://youtu.be/SiCTXSwqzkw",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "5",
+      "title": "Commandos",
+      "releaseDate": "Dec 05, 2024",
+      "imageUrl": "/DataImage/Movie/poster_5.png",
+      "score": 74,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Animation",
+        "Sci-Fi & Fantasy",
+        "Action & Adventure"
+      ],
+      "runtime": "1h 10m",
+      "videoUrl": "https://youtu.be/VdahDEpqPA8",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "6",
+      "title": "Juror #2",
+      "releaseDate": "Oct 30, 2024",
+      "imageUrl": "/DataImage/Movie/poster_6.png",
+      "score": 70,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "runtime": "1h 54m",
+      "videoUrl": "https://youtu.be/czYUXo0R0oA",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "7",
+      "title": "The Day of Jackal",
+      "releaseDate": "Nov 07, 2024",
+      "imageUrl": "/DataImage/Movie/poster_7.png",
+      "score": 82,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Drama",
+        "Action & Adventure",
+        "Mystery"
+      ],
+      "runtime": "1h 10m",
+      "videoUrl": "https://youtu.be/EUb_04MdnMI",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "8",
+      "title": "Moana 2",
+      "releaseDate": "Nov 27, 2024",
+      "imageUrl": "/DataImage/Movie/poster_8.png",
+      "score": 69,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Animation",
+        "Adventure",
+        "Family",
+        "Comedy"
+      ],
+      "runtime": "1h 40m",
+      "videoUrl": "https://youtu.be/9IisFuMUz44",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "9",
+      "title": "Wicked",
+      "releaseDate": "Nov 20, 2024",
+      "imageUrl": "/DataImage/Movie/poster_9.png",
+      "score": 76,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Drama",
+        "Romance",
+        "Fantasy"
+      ],
+      "runtime": "2h 40m",
+      "videoUrl": "https://youtu.be/pqi45Qhq3CI",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "10",
+      "title": "The Childrens Train",
+      "releaseDate": "Dec 04, 2024",
+      "imageUrl": "/DataImage/Movie/poster_10.png",
+      "score": 75,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Drama"
+      ],
+      "runtime": "1h 46m",
+      "videoUrl": "https://youtu.be/76Aljh0U8Hk",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "11",
+      "title": "Love Life Light",
+      "releaseDate": "Dec 08, 2023",
+      "imageUrl": "/DataImage/Movie/poster_11.png",
+      "score": 64,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Drama",
+        "Mystery",
+        "Fantasy"
+      ],
+      "runtime": "1h 23m",
+      "videoUrl": "https://youtu.be/E83Y6dzXph0?si=WVC51vi8T_bnfL-f",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "12",
+      "title": "Star Wars: Skeleton",
+      "releaseDate": "Dec 02, 2024",
+      "imageUrl": "/DataImage/Movie/poster_12.png",
+      "score": 70,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "runtime": "1h 20m",
+      "videoUrl": "https://youtu.be/f19gfOMZTtg",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "13",
+      "title": "The Sticky",
+      "releaseDate": "Dec 06, 2024",
+      "imageUrl": "/DataImage/Movie/poster_13.png",
+      "score": 83,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Comedy",
+        "Drama"
+      ],
+      "runtime": "1h 20m",
+      "videoUrl": "https://youtu.be/EicNAYAs8ds",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "14",
+      "title": "Silo",
+      "releaseDate": "May 04, 2023",
+      "imageUrl": "/DataImage/Movie/poster_14.png",
+      "score": 82,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Sci-Fi & Fantasy",
+        "Drama"
+      ],
+      "runtime": "1h 33m",
+      "videoUrl": "https://youtu.be/8ZYhuvIv1pA",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "15",
+      "title": "Arcane",
+      "releaseDate": "Nov 06, 2021",
+      "imageUrl": "/DataImage/Movie/poster_15.png",
+      "score": 88,
+      "overview": "A different movie with a thrilling plot.",
+      "genre": [
+        "Animation",
+        "Sci-Fi & Fantasy",
+        " Action & Adventure",
+        "Mystery",
+        "Drama"
+      ],
+      "runtime": "1h 05m",
+      "videoUrl": "https://youtu.be/W4gLFBNGgiY",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "16",
+      "title": "A Million Miles Away",
+      "releaseDate": "Sep 15, 2023",
+      "imageUrl": "/DataImage/Movie/poster_16.png",
+      "score": 84,
+      "overview": "Inspired by the real-life story of NASA flight engineer José Hernández, this film chronicles his journey from a rural village to space.",
+      "genre": [
+        "Biography",
+        "Drama"
+      ],
+      "runtime": "1h 50m",
+      "videoUrl": "https://youtu.be/2nWbnO9u2sA",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "17",
+      "title": "Killers of the Flower Moon",
+      "releaseDate": "Oct 20, 2023",
+      "imageUrl": "/DataImage/Movie/poster_17.png",
+      "score": 89,
+      "overview": "A murder mystery set in 1920s Oklahoma, depicting the Osage Nation murders and the creation of the FBI.",
+      "genre": [
+        "Drama",
+        "Crime",
+        "History"
+      ],
+      "runtime": "3h 26m",
+      "videoUrl": "https://youtu.be/y5mzjD7hV5A",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "18",
+      "title": "Dune: Part Two",
+      "releaseDate": "Mar 15, 2024",
+      "imageUrl": "/DataImage/Movie/poster_18.png",
+      "score": 91,
+      "overview": "The sequel to Dune, continuing Paul Atreides' story and his fight against the forces of oppression on Arrakis.",
+      "genre": [
+        "Sci-Fi",
+        "Adventure",
+        "Drama"
+      ],
+      "runtime": "2h 50m",
+      "videoUrl": "https://youtu.be/Y7cd4Y5gBpQ",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "19",
+      "title": "Barbie",
+      "releaseDate": "Jul 21, 2023",
+      "imageUrl": "/DataImage/Movie/poster_19.png",
+      "score": 85,
+      "overview": "A fantastical journey as Barbie explores the real world and learns the value of imperfection.",
+      "genre": [
+        "Comedy",
+        "Adventure",
+        "Fantasy"
+      ],
+      "runtime": "1h 54m",
+      "videoUrl": "https://youtu.be/pNGFOsMTTdc",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "20",
+      "title": "Oppenheimer",
+      "releaseDate": "Jul 21, 2023",
+      "imageUrl": "/DataImage/Movie/poster_20.png",
+      "score": 93,
+      "overview": "A biographical drama about J. Robert Oppenheimer and his role in the development of the atomic bomb.",
+      "genre": [
+        "Biography",
+        "Drama",
+        "History"
+      ],
+      "runtime": "3h",
+      "videoUrl": "https://youtu.be/uYPbbksJxIg",
+      "movieUrl": "https://www.netflix.com/in/title/81004270"
+    },
+    {
+      "id": "21",
+      "title": "amza",
+      "releaseDate": "Dec 28, 2024",
+      "imageUrl": "https://res.cloudinary.com/dlc8zsx7m/image/upload/v1734692971/xthvaukub0sjg5jmhn8p.jpg",
+      "score": 19,
+      "overview": "sdkjds",
+      "genre": [
+        "drama"
+      ],
+      "runtime": "93 min",
+      "videoUrl": "https://youtu.be/8mGu7T_ReU0?si=Isk2p0CurMJKOiI3",
+      "movieUrl": "https://youtu.be/8mGu7T_ReU0?si=Isk2p0CurMJKOiI3"
+    }
+  ],
+  "Trailer": [
+    {
+      "id": "1",
+      "type": "movie",
+      "title": "Mary (2024)",
+      "image": "/DataImage/Movie/poster_2.png",
+      "videoUrl": "https://youtu.be/d74vHvsACSs",
+      "releaseDate": "Dec 06, 2024"
+    },
+    {
+      "id": "2",
+      "type": "tv",
+      "title": "Law & Order:",
+      "image": "/DataImage/TV Show/Poster_16.png",
+      "videoUrl": "https://youtu.be/MhGI_1DIhxw",
+      "releaseDate": "Sep 20, 1999"
+    },
+    {
+      "id": "3",
+      "type": "movie",
+      "title": "The Day of Jackal",
+      "releaseDate": "Nov 07, 2024",
+      "image": "/DataImage/Movie/poster_7.png",
+      "videoUrl": "https://youtu.be/EUb_04MdnMI"
+    },
+    {
+      "id": "4",
+      "title": "Silo",
+      "type": "movie",
+      "image": "/DataImage/Movie/poster_14.png",
+      "videoUrl": "https://youtu.be/8ZYhuvIv1pA",
+      "releaseDate": "May 04, 2023"
+    },
+    {
+      "id": "5",
+      "title": "Bad Boys",
+      "type": "theater",
+      "image": "/DataImage/TV Show/poster_19.png",
+      "releaseDate": "Jun 05, 2024",
+      "videoUrl": "https://youtu.be/uWLNl_KQCAU"
+    },
+    {
+      "id": "6",
+      "title": "Hunting With Tigers",
+      "type": "theater",
+      "image": "/DataImage/TV Show/poster_20.png",
+      "releaseDate": "Nov 22, 2024",
+      "videoUrl": "https://youtu.be/JD8EmYWSbUY"
+    },
+    {
+      "id": "7",
+      "title": "Star Wars: Skeleton Crew",
+      "type": "movie",
+      "image": "/DataImage/Movie/poster_12.png",
+      "videoUrl": "https://youtu.be/f19gfOMZTtg",
+      "releaseDate": "Nov 15, 2024"
+    },
+    {
+      "id": "8",
+      "title": "Our Little Secret",
+      "type": "tv",
+      "image": "/DataImage/TV Show/poster_5.png",
+      "releaseDate": "Nov 27, 2024",
+      "videoUrl": "https://youtu.be/fcc9G9PXTEE"
+    }
+  ],
+  "TVShows": [
+    {
+      "id": "1",
+      "title": "GTMAX",
+      "type": "theater",
+      "episodeCount": 10,
+      "imageUrl": "/DataImage/TV Show/Poster_1.png",
+      "score": 61,
+      "overview": "When a notorious gang of bikers recruits her brother for a heist, a former motocross champion must face her deepest fears to keep her family safe.",
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
+      "runtime": "1h 40m",
+      "releaseDate": "Nov 19, 2024",
+      "videoUrl": "https://youtu.be/Zs0uKHrVRws"
+    },
+    {
+      "id": "2",
+      "title": "Suits",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_2.png",
+      "score": 82,
+      "overview": "While running from a drug deal gone bad, Mike Ross, a brilliant young college-dropout, slips into a job interview with one of New York City's best legal closers, Harvey Specter. Tired of cookie-cutter law school grads, Harvey takes a gamble by hiring Mike on the spot after he recognizes his raw talent and photographic memory.",
+      "genre": [
+        "Drama"
+      ],
+      "runtime": "1h 45m",
+      "releaseDate": "Jun 23, 2011",
+      "videoUrl": "https://youtu.be/cUnkjEIW2-o"
+    },
+    {
+      "id": "3",
+      "title": "The Good Doctor",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_3.png",
+      "score": 85,
+      "overview": "Shaun Murphy, a young surgeon with autism and savant syndrome, relocates from a quiet country life to join a prestigious hospital's surgical unit. Unable to personally connect with those around him, Shaun uses his extraordinary medical gifts to save lives and challenge the skepticism of his colleagues.",
+      "genre": [
+        "Drama"
+      ],
+      "runtime": "1h 25m",
+      "releaseDate": "Jun 23, 2011",
+      "videoUrl": "https://youtu.be/lnY9FWUTY84"
+    },
+    {
+      "id": "4",
+      "title": "House",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_4.png",
+      "score": 86,
+      "overview": "Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius, leads a team of diagnosticians at the fictional Princeton–Plainsboro Teaching Hospital in New Jersey.",
+      "genre": [
+        "Drama",
+        "Mystery",
+        "Comedy"
+      ],
+      "runtime": "1h 35",
+      "releaseDate": "Nov 16, 2004",
+      "videoUrl": "https://youtu.be/MczMB8nU1sY"
+    },
+    {
+      "id": "5",
+      "title": "Our Little Secret",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_5.png",
+      "score": 63,
+      "overview": "After discovering their significant others are siblings, two resentful exes must spend Christmas under one roof — while hiding their romantic history.",
+      "genre": [
+        "Romance",
+        "Comedy",
+        "Drama"
+      ],
+      "runtime": "1h 41m",
+      "releaseDate": "Nov 27, 2024",
+      "videoUrl": "https://youtu.be/fcc9G9PXTEE"
+    },
+    {
+      "id": "6",
+      "title": "Young Sheldon",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_6.png",
+      "score": 81,
+      "overview": "The early life of child genius Sheldon Cooper, later seen in The Big Bang Theory.",
+      "genre": [
+        "Comedy",
+        "Family",
+        "Drama"
+      ],
+      "runtime": "1h 43m",
+      "releaseDate": "Sep 25, 2017",
+      "videoUrl": "https://youtu.be/FStMMcj-RiA"
+    },
+    {
+      "id": "7",
+      "title": "Venom",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_7.png",
+      "score": 68,
+      "overview": "Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own.",
+      "genre": [
+        "Science Fiction",
+        "Action"
+      ],
+      "runtime": "1h 52m",
+      "releaseDate": "Oct 05, 2018",
+      "videoUrl": "https://youtu.be/xLCn88bfW1o"
+    },
+    {
+      "id": "8",
+      "title": "Supernatural",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_8.png",
+      "score": 83,
+      "overview": "When they were boys, Sam and Dean Winchester lost their mother to a mysterious and demonic supernatural force. Subsequently, their father raised them to be soldiers. He taught them about the paranormal evil that lives in the dark corners and on the back roads of America ... and he taught them how to kill it. Now, the Winchester brothers crisscross the country in their '67 Chevy Impala, battling every kind of supernatural threat they encounter along the way.",
+      "genre": [
+        "Drama",
+        "Mystery",
+        "Sci-Fi & Fantasy"
+      ],
+      "runtime": "1h 23m",
+      "releaseDate": "Sep 13, 2005",
+      "videoUrl": "https://youtu.be/yy96yJjkvjo"
+    },
+    {
+      "id": "9",
+      "title": "The Garfield Movie",
+      "type": "animated",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_9.png",
+      "score": 71,
+      "overview": "Garfield, the world-famous, Monday-hating, lasagna-loving indoor cat, is about to have a wild outdoor adventure! After an unexpected reunion with his long-lost father – scruffy street cat Vic – Garfield and his canine friend Odie are forced from their perfectly pampered life into joining Vic in a hilarious, high-stakes heist.",
+      "genre": [
+        "Animation",
+        "Comedy",
+        "Family",
+        "Adventure",
+        "Action"
+      ],
+      "runtime": "1h 41m",
+      "releaseDate": "Apr 30, 2024",
+      "videoUrl": "https://youtu.be/yk2Ej59DnrE"
+    },
+    {
+      "id": "10",
+      "title": "Cobra Kai",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_10.png",
+      "score": 82,
+      "overview": "This Karate Kid sequel series picks up 30 years after the events of the 1984 All Valley Karate Tournament and finds Johnny Lawrence on the hunt for redemption by reopening the infamous Cobra Kai karate dojo. This reignites his old rivalry with the successful Daniel LaRusso, who has been working to maintain the balance in his life without mentor Mr. Miyagi.",
+      "genre": [
+        "Action & Adventure",
+        "Drama",
+        "Comedy"
+      ],
+      "runtime": "1h 45m",
+      "releaseDate": "May 02, 2018",
+      "videoUrl": "https://youtu.be/xCwwxNbtK6Y"
+    },
+    {
+      "id": "11",
+      "title": "The Platform 2",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_11.png",
+      "score": 56,
+      "overview": "After a mysterious leader imposes his law in a brutal system of vertical cells, a new arrival battles against a dubious food distribution method.",
+      "genre": [
+        "Science Fiction",
+        "Horror"
+      ],
+      "runtime": "1h 40m",
+      "releaseDate": "Oct 04, 2024",
+      "videoUrl": "https://youtu.be/UKFMYWNatQM"
+    },
+    {
+      "id": "12",
+      "title": "Lucifer",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_12.png",
+      "score": 68,
+      "overview": "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals. But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape.",
+      "genre": [
+        "Crime",
+        "Sci-Fi & Fantasy"
+      ],
+      "runtime": "1h 53m",
+      "releaseDate": "Jan 25, 2016",
+      "videoUrl": "https://youtu.be/X4bF_quwNtw"
+    },
+    {
+      "id": "13",
+      "title": "The Mentalist",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_13.png",
+      "score": 82,
+      "overview": "Patrick Jane, a former celebrity psychic medium, uses his razor sharp skills of observation and expertise at 'reading' people to solve serious crimes with the California Bureau of Investigation.",
+      "genre": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "runtime": "1h 13m",
+      "releaseDate": "Sep 23, 2008",
+      "videoUrl": "https://youtu.be/nn2Q69pSC_M"
+    },
+    {
+      "id": "14",
+      "title": "Don't Move",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_14.png",
+      "score": 64,
+      "overview": "A grieving woman in a secluded forest encounters a killer who injects her with a paralytic drug. As her body shuts down, her fight for survival begins.",
+      "genre": [
+        "Horror",
+        "Thriller"
+      ],
+      "runtime": "1h 32m",
+      "releaseDate": "Oct 25, 2024",
+      "videoUrl": "https://youtu.be/q0GpvLLMVQ4"
+    },
+    {
+      "id": "15",
+      "title": "Sing: Thriller",
+      "type": "animated",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_15.png",
+      "score": 74,
+      "overview": "Buster Moon dreams up a star-studded spectacle set to Michael Jackson's 'Thriller' in this animated short featuring characters from the hit 'Sing' films.",
+      "genre": [
+        "Animation",
+        "Family",
+        "Comedy"
+      ],
+      "runtime": "11m",
+      "releaseDate": "Oct 16, 2024",
+      "videoUrl": "https://youtu.be/RiRiTEhiyP4"
+    },
+    {
+      "id": "16",
+      "title": "Law & Order:",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_16.png",
+      "score": 79,
+      "overview": "In the criminal justice system, sexually-based offenses are considered especially heinous. In New York City, the dedicated detectives who investigate these vicious felonies are members of an elite squad known as the Special Victims Unit. These are their stories.",
+      "genre": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "runtime": "1h 36m",
+      "releaseDate": "Sep 20, 1999",
+      "videoUrl": "https://youtu.be/MhGI_1DIhxw"
+    },
+    {
+      "id": "17",
+      "title": "Pimpinero",
+      "type": "tv",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_17.png",
+      "score": 72,
+      "overview": "When Juan, a young gasoline smuggler, is forced to work for a mysterious organization in the desert bordering Colombia and Venezuela, his girlfriend Diana embarks on a journey to uncover the secrets that inhabit this no-man’s-land.",
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
+      "runtime": "2h 2m",
+      "releaseDate": "Oct 10, 2024",
+      "videoUrl": "https://youtu.be/g8HrGG4jmRQ"
+    },
+    {
+      "id": "18",
+      "title": "Dan Da Dan",
+      "type": "animated",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_18.png",
+      "score": 89,
+      "overview": "In a bet to prove whether ghosts or aliens exist, two high schoolers face terrifying paranormal threats, gain superpowers and maybe even fall in love?!",
+      "genre": [
+        "Animation",
+        "Action & Adventure",
+        "Comedy",
+        "Sci-Fi & Fantasy"
+      ],
+      "runtime": "1h 46m",
+      "releaseDate": "Oct 04, 2024",
+      "videoUrl": "https://youtu.be/6Kj1hc54nu0"
+    },
+    {
+      "id": "19",
+      "title": "Bad Boys",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_19.png",
+      "score": 75,
+      "overview": "After their late former Captain is framed, Lowrey and Burnett try to clear his name, only to end up on the run themselves.",
+      "genre": [
+        "Action",
+        "Comedy"
+      ],
+      "runtime": "1h 55m",
+      "releaseDate": "Jun 05, 2024",
+      "videoUrl": "https://youtu.be/uWLNl_KQCAU"
+    },
+    {
+      "id": "20",
+      "title": "Hunting With Tigers",
+      "type": "theater",
+      "episodeCount": 8,
+      "imageUrl": "/DataImage/TV Show/Poster_20.png",
+      "score": 63,
+      "overview": "Malik, a young Parisian hustler, discovers that his stepfather Serge, a famous bank robber, has been arrested along with his accomplices. During the trial, Iris, one of the accused's lawyers, Chérif, requests Malik to accept a dangerous heist in exchange for Serge and her client's liberty. Malik must convince and reunite Chérif's former partners to accomplish this high-risk stickup.",
+      "genre": [
+        "Action",
+        "Thriller"
+      ],
+      "runtime": "1h 49m",
+      "releaseDate": "Nov 22, 2024",
+      "videoUrl": "https://youtu.be/JD8EmYWSbUY"
+    },
+    {
+      "id": "21",
+      "title": "Level",
+      "releaseDate": "Dec 16, 2024",
+      "imageUrl": "https://res.cloudinary.com/dlc8zsx7m/image/upload/v1734694711/Home/tvShows/j9uwtqpazlroewuz1ktd.png",
+      "score": 21,
+      "overview": "urekj",
+      "genre": [
+        "Drama",
+        "Spense",
+        "Action"
+      ],
+      "runtime": "83 min",
+      "videoUrl": "https://youtu.be/8mGu7T_ReU0?si=Isk2p0CurMJKOiI3",
+      "movieUrl": "https://youtu.be/8mGu7T_ReU0?si=Isk2p0CurMJKOiI3",
+      "type": "",
+      "episodeCount": 0
+    },
+    {
+      "id": "22",
+      "title": "oiui",
+      "releaseDate": "Dec 18, 2024",
+      "imageUrl": "https://res.cloudinary.com/dlc8zsx7m/image/upload/v1734875602/Home/tvShows/osqrgadqor7rkecvx9mr.png",
+      "score": 21,
+      "overview": "uhuoii",
+      "genre": [
+        "Drama",
+        "Spense",
+        "Action"
+      ],
+      "runtime": "85 min",
+      "videoUrl": "https://youtu.be/ilNt2bikxDI?si=5ggBaNlG-LFODJse",
+      "movieUrl": "ihui",
+      "type": "",
+      "episodeCount": 0
+    }
+  ]
+}
