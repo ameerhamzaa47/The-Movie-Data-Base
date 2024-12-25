@@ -197,9 +197,9 @@ const updateMovieStatusInFirestore = async (movieId: string, field: string, acti
 };
 
   const movieId = id || '';
-  const addedToWatchlist = movieWatchlist.includes(movieId);
-  const addedToFavorites = movieFavorites.includes(movieId);
-  const addedToLists = movieLists.includes(movieId);
+   movieWatchlist.includes(movieId);
+   movieFavorites.includes(movieId);
+   movieLists.includes(movieId);
 
   // Handle toggling the watchlist
   const toggleWatchlist = async () => {

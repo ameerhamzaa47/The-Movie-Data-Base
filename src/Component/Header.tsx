@@ -15,7 +15,6 @@ import Notification from '../IDB Data/Notification';
 
 const Header: FC = () => {
   const [open, setOpen] = useState(false);
-  const [addOpen, setaddOpen] = useState(false);
   const [submenuMovies, setSubmenuMovies] = useState(false);
   const [submenuTVShows, setSubmenuTVShows] = useState(false);
   const [submenuPeople, setSubmenuPeople] = useState(false);

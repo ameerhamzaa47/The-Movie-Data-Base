@@ -179,9 +179,9 @@ const TvDetailPage: FC = () => {
   };
 
   const movieId = id || '';
-  const addedToWatchlist = TvShowWatchlist.includes(movieId);
-  const addedToFavorites = TvShowFavorites.includes(movieId);
-  const addedToLists = TvShowLists.includes(movieId);
+  TvShowWatchlist.includes(movieId);
+  TvShowFavorites.includes(movieId);
+  TvShowLists.includes(movieId);
 
 
   const toggleWatchlist = async () => {
