@@ -42,7 +42,7 @@ function App() {
         <Route path='/addTvShow' element={<Protected cmp={AddTVShow}/>} />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/u/:name' element={<Profile/>} />
-        <Route path='/adminPannel' element={<Admin/>} />
+        <Route path='/adminPannel' element={<Protected cmp={Admin}/>} />
         <Route path='/update/:id' element={<UpdateMovie/>} />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>

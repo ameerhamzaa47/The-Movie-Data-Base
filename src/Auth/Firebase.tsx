@@ -1,8 +1,7 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc} from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection, addDoc, getDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -42,35 +41,34 @@ const addCommentToFirestore = async (uid: string, commentText: string) => {
 export { addCommentToFirestore };
 
 
-// Add in list
+// Function to add a movie to a specific category (watchlist, favorites, or lists)
+const toggleMovieInFirestore = async (uid: string, movieId: string, category: string, isAdded: boolean) => {
+  if (!uid || !movieId || !category) return;
 
+  try {
+    const userMoviesRef = doc(db, "users", uid);  // Reference to the user's document
+    const userDoc = await getDoc(userMoviesRef);
 
-// Function to add or remove movie from user's list (toggle functionality)
-const toggleMovieInList = async (uid: string, movieId: string, listType: string) => {
-  const movieRef = doc(db, "users", uid, listType, movieId);
+    // If the user document doesn't exist, create it with empty arrays for categories
+    if (!userDoc.exists()) {
+      await setDoc(userMoviesRef, { [category]: [] });
+    }
 
-  // Check if the movie is already in the list
-  const movieDoc = await getDoc(movieRef);
-  
-  if (movieDoc.exists()) {
-    // Movie exists, so we remove it
-    await deleteDoc(movieRef);
-    console.log("Removed from list");
-  } else {
-    // Movie doesn't exist, so we add it
-    await setDoc(movieRef, { movieId, timestamp: new Date() });
-    console.log("Added to list");
+    // Add or remove the movie based on the current state (isAdded)
+    await setDoc(
+      userMoviesRef,
+      {
+        [category]: isAdded ? arrayRemove(movieId) : arrayUnion(movieId), // Toggle logic
+      },
+      { merge: true }
+    );
+  } catch (error) {
+    console.error("Error toggling movie in Firestore:", error);
   }
 };
 
-// Function to check if movie is already in the list (for styling)
-const isMovieInList = async (uid: string, movieId: string, listType: string) => {
-  const movieRef = doc(db, "users", uid, listType, movieId);
-  const movieDoc = await getDoc(movieRef);
-  return movieDoc.exists();
-};
+export { toggleMovieInFirestore };
 
-export { toggleMovieInList, isMovieInList };
 
 
 

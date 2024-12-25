@@ -16,8 +16,13 @@ import prime from '../assets/image/prime_Video.png'
 import { auth } from '../Auth/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTvShowToWatchlist, removeTvShowFromWatchlist, addTvShowToFavorites, removeTvShowFromFavorites } from '../Reducer/TvShowSlice';
+import { RootState } from '../Store/store';
 
 const TvDetailPage: FC = () => {
+  const dispatch = useDispatch();
+  const tvShowsState = useSelector((state: RootState) => state.tvShow);
   // const [movies, setTrailers] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [paidStatus, setPaidStatus] = useState<boolean | string>(false);
@@ -142,6 +147,33 @@ const TvDetailPage: FC = () => {
       </div>
     )
   }
+
+  const handleWatchlistClick = () => {
+    if (!tvShow) return;
+    if (watchlist.includes(tvShow.id)) {
+      dispatch(removeTvShowFromWatchlist(tvShow.id));
+    } else {
+      dispatch(addTvShowToWatchlist(tvShow.id));
+    }
+  };
+
+  const handleFavoritesClick = () => {
+    if (!tvShow) return;
+    if (favorites.includes(tvShow.id)) {
+      dispatch(removeTvShowFromFavorites(tvShow.id));
+    } else {
+      dispatch(addTvShowToFavorites(tvShow.id));
+    }
+  };
+
+  const handleListsClick = () => {
+    if (!tvShow) return;
+    if (lists.includes(tvShow.id)) {
+      dispatch(removeTvShowFromLists(tvShow.id));
+    } else {
+      dispatch(addTvShowToLists(tvShow.id));
+    }
+  };
 
   return (
     <>

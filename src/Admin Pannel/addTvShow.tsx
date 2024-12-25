@@ -6,104 +6,111 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import * as Ably from 'ably';
 
 const schema = yup.object().shape({
-  title: yup.string().required('Title is required'),
-  Runtime: yup.number().required('Runtime is required').positive('Runtime must be a positive number'),
-  Date: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Must be a valid date in YYYY-MM-DD format').required('Release Date is required'),
-  Poster: yup.mixed().required('Image is required'), // Correct this validation for the file upload
-  Video: yup.string().matches(/^https:\/\/youtu\.be\/[a-zA-Z0-9_-]+(\?si=[a-zA-Z0-9_-]+)?$/, 'Must be a valid YouTube link').required('Video link is required'),
-  overview: yup.string().required('Overview is required'),
-  score: yup.number().required('Score is required').min(0, 'Score must be at least 0').max(100, 'Score must be at most 100'),
-  genre: yup.string().required('Genre is required'),
-  movieUrl: yup.string().required('Movie URL is required'),
-  type: yup.string().required('Type is required'),
+    title: yup.string().required('Title is required'),
+    Runtime: yup.number().required('Runtime is required').positive('Runtime must be a positive number'),
+    Date: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Must be a valid date in YYYY-MM-DD format').required('Release Date is required'),
+    Poster: yup.mixed().required('Image is required'), // Correct this validation for the file upload
+    Video: yup.string().matches(/^https:\/\/youtu\.be\/[a-zA-Z0-9_-]+(\?si=[a-zA-Z0-9_-]+)?$/, 'Must be a valid YouTube link').required('Video link is required'),
+    overview: yup.string().required('Overview is required'),
+    score: yup.number().required('Score is required').min(0, 'Score must be at least 0').max(100, 'Score must be at most 100'),
+    genre: yup.string().required('Genre is required'),
+    movieUrl: yup.string().required('Movie URL is required'),
+    type: yup.string().required('Type is required'),
 });
 
 const AddTVShow: FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-  });
-  const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+    });
+    const navigate = useNavigate();
 
-  // Generate Next ID
-  const getNextId = async () => {
-  const response = await fetch('http://localhost:5000/TVShows');
+    // Generate Next ID
+    const getNextId = async () => {
+        const response = await fetch('http://localhost:5000/TVShows');
         const movies = await response.json();
         const maxId = movies.length > 0 ? Math.max(...movies.map((movie: TVShow) => movie.id)) : 0;
         return maxId + 1;
-  }
+    }
 
-  const onSubmit = async (data: any) => {
-    const nextId = await getNextId();
-    const userProvidedDate = data.Date;
-  
-    // Convert the date string (YYYY-MM-DD) to a Date object
-    const dateObj = new Date(userProvidedDate);
-  
-    const formattedDate = dateObj.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',  // 'short' gives "Dec", 'long' would give "December"
-      day: '2-digit',  // '2-digit' will give "01"
-    });
-  
-    // Handling file upload and URL creation for poster image
-    const posterFile = data.Poster[0];
+    const onSubmit = async (data: any) => {
+        const nextId = await getNextId();
+        const userProvidedDate = data.Date;
 
-    // Create a FormData to send the image to Cloudinary
-    const formData = new FormData();
-    formData.append('file', posterFile);
-    formData.append('upload_preset', 'TVShow Image');
-    formData.append('folder', 'Home/tvShows');
-  
-    // Save the file itself in IndexedDB
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-        const response = await axios.post('https://api.cloudinary.com/v1_1/dlc8zsx7m/image/upload', formData);
-        const imageUrl = response.data.secure_url; 
-      
-      const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
-  
-      const newTVShow: TVShow = {
-          id: nextId,
-          title: data.title,
-          releaseDate: formattedDate,
-          imageUrl: imageUrl,
-          score: data.score,
-          overview: data.overview,
-          genre: genresArray,
-          runtime: data.Runtime + ' min',
-          videoUrl: data.Video,
-          movieUrl: data.movieUrl,
-          type: '',
-          episodeCount: 0
-      };
-  
-      try {
-        const response = await fetch('http://localhost:5000/TVShows', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newTVShow),
+        // Convert the date string (YYYY-MM-DD) to a Date object
+        const dateObj = new Date(userProvidedDate);
+
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',  // 'short' gives "Dec", 'long' would give "December"
+            day: '2-digit',  // '2-digit' will give "01"
         });
-  
-        if (!response.ok) {
-          throw new Error('Failed to add TV Show to server');
-        }
-  
-        toast.success('TV Show Added Successfully');
-        navigate('/adminPannel');
-      } catch (error) {
-        console.error('Error adding TV Show to IndexedDB or server', error);
-        toast.error('Failed to add TV Show');
-      }
-    };
-  
-    reader.readAsDataURL(posterFile);
-  };
 
-  
+        // Handling file upload and URL creation for poster image
+        const posterFile = data.Poster[0];
+
+        // Create a FormData to send the image to Cloudinary
+        const formData = new FormData();
+        formData.append('file', posterFile);
+        formData.append('upload_preset', 'TVShow Image');
+        formData.append('folder', 'Home/tvShows');
+
+        // Save the file itself in IndexedDB
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dlc8zsx7m/image/upload', formData);
+            const imageUrl = response.data.secure_url;
+
+            const genresArray = data.genre.split(',').map((genre: string) => genre.trim());
+
+            const newTVShow: TVShow = {
+                id: nextId,
+                title: data.title,
+                releaseDate: formattedDate,
+                imageUrl: imageUrl,
+                score: data.score,
+                overview: data.overview,
+                genre: genresArray,
+                runtime: data.Runtime + ' min',
+                videoUrl: data.Video,
+                movieUrl: data.movieUrl,
+                type: '',
+                episodeCount: 0
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/TVShows', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newTVShow),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add TV Show to server');
+                }
+
+                toast.success('TV Show Added Successfully');
+
+                // Publish a notification to Ably
+                const ably = new Ably.Realtime({ key: 'zaHaNQ.19AEng:Nvs1bDlFVvjDoVAgif5PmSGIeRig6LJ95znNpKtRpEo' });  // Replace with your Ably API key
+                const channel = ably.channels.get('TvShow-channel');
+                channel.publish('new-TvShow', `New TvShow added: ${data.title}`);
+
+                navigate('/adminPannel');
+            } catch (error) {
+                console.error('Error adding TV Show to IndexedDB or server', error);
+                toast.error('Failed to add TV Show');
+            }
+        };
+
+        reader.readAsDataURL(posterFile);
+    };
+
+
 
     return (
         <div className='p-10 flex flex-col items-center'>
@@ -124,7 +131,7 @@ const AddTVShow: FC = () => {
                     />
                     {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
                 </div>
-                
+
                 <div className='flex flex-col my-2'>
                     <label className='font-semibold'>Type</label>
                     <select
@@ -207,14 +214,14 @@ const AddTVShow: FC = () => {
                 </div>
 
                 <div className='flex flex-col my-2'>
-          <label className='font-semibold'>Movie Link</label>
-          <input
-            {...register("movieUrl")}
-            className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
-            placeholder='Movie Link...'
-            type="text"
-          />
-          </div>
+                    <label className='font-semibold'>Movie Link</label>
+                    <input
+                        {...register("movieUrl")}
+                        className='border border-gray-300 p-2 w-96 dark:text-black rounded-md h-10 my-2'
+                        placeholder='Movie Link...'
+                        type="text"
+                    />
+                </div>
 
                 <div className='flex flex-col my-2'>
                     <label className='font-semibold'>Overview</label>

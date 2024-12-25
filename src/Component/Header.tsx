@@ -54,8 +54,6 @@ const Header: FC = () => {
       toast.error('Error logging out');
     }
   };
-
-  console.log('djd', adimnId);
   
 
   return (

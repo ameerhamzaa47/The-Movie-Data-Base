@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "json-server --watch MovieData.json --port 5000",
-    "both": "concurrently \"npm run dev\" \"npm run server\"",
-    "start": "json-server --watch MovieData.json --host 0.0.0.0 --port $PORT"
+    "both": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
