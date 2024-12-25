@@ -56,7 +56,7 @@ const Header: FC = () => {
   
 
   return (
-    <header className="navbar bg-[#021C31]  flex justify-between">
+    <header className="navbar bg-[#021C31] sticky top-0 z-20 flex justify-between">
 
       <div>
 
