@@ -15,14 +15,15 @@ import img8 from '../assets/Cast/Img_8.png'
 import prime from '../assets/image/prime_Video.png'
 import { auth } from '../Auth/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTvShowToWatchlist, removeTvShowFromWatchlist, addTvShowToFavorites, removeTvShowFromFavorites } from '../Reducer/TvShowSlice';
+import { addTvShowToWatchlist, removeTvShowFromWatchlist, addTvShowToFavorites, removeTvShowFromFavorites, addTvShowToLists } from '../Reducer/TvShowSlice';
 import { RootState } from '../Store/store';
+import { removeMovieFromLists } from '../Reducer/movieSlice';
 
 const TvDetailPage: FC = () => {
   const dispatch = useDispatch();
-  const tvShowsState = useSelector((state: RootState) => state.tvShow);
+  const { TvShowWatchlist, TvShowFavorites, TvShowLists } = useSelector((state: RootState) => state.tvShow);
   // const [movies, setTrailers] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [paidStatus, setPaidStatus] = useState<boolean | string>(false);
@@ -47,52 +48,51 @@ const TvDetailPage: FC = () => {
   };
 
   const { id } = useParams<{ id: string }>()
-  console.log(id);
   const [tvShow, setTvShow] = useState<TVShow[]>([]);
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const fetchMovieData = async () => {
+    const fetchTvShowData = async () => {
       try {
         const res = await fetch('http://localhost:5000/TVShows');
         if (!res.ok) {
           throw new Error('Failed to fetch movies');
         }
-        const movies: TVShow[] = await res.json();
-  
+        const TvShow: TVShow[] = await res.json();
+
         // Find the movie with the matching ID from the fetched data
-        const foundMovie = movies.find((movie) => movie.id.toString() === id);
-        if (!foundMovie) {
-          throw new Error(`Movie with ID ${id} not found`);
+        const foundTvShow = TvShow.find((show) => show.id.toString() === id);
+        if (!foundTvShow) {
+          throw new Error(`Tv Show with ID ${id} not found`);
         }
-  
-        setTvShow([foundMovie]);
+
+        setTvShow([foundTvShow]);
       } catch (error) {
         console.error('Failed to fetch movie data:', error);
       }
     };
-  
+
     if (id) {
-      fetchMovieData();
+      fetchTvShowData();
     }
   }, [id]);
 
   useEffect(() => {
-      const fetchUserPaidStatus = async () => {
-        if (user) {
-          const userDocRef = doc(getFirestore(), "users", user.uid);
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            setPaidStatus(userDoc.data()?.isSubscribed);
-          } else {
-            console.log("No such document!");
-          }
+    const fetchUserPaidStatus = async () => {
+      if (user) {
+        const userDocRef = doc(getFirestore(), "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setPaidStatus(userDoc.data()?.isSubscribed);
+        } else {
+          console.log("No such document!");
         }
-      };
-  
-      fetchUserPaidStatus();
-    }, [user]);
-    
+      }
+    };
+
+    fetchUserPaidStatus();
+  }, [user]);
+
   // rating bar
   interface RatingBarProps {
     value: number; // Percentage value (0-100)
@@ -148,32 +148,84 @@ const TvDetailPage: FC = () => {
     )
   }
 
-  const handleWatchlistClick = () => {
-    if (!tvShow) return;
-    if (watchlist.includes(tvShow.id)) {
-      dispatch(removeTvShowFromWatchlist(tvShow.id));
-    } else {
-      dispatch(addTvShowToWatchlist(tvShow.id));
+  const [TvShowStatuses, setTvShowStatuses] = useState({
+    watchlist: false,
+    favorites: false,
+    lists: false,
+  });
+
+  // For update color of button
+  const updateMovieStatusInFirestore = async (movieId: string, field: string, action: 'add' | 'remove') => {
+    if (!user) return; // Ensure the user is authenticated
+
+    const userDocRef = doc(getFirestore(), "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const currentData = userDoc.data();
+      const currentList = Array.isArray(currentData?.[field]) ? currentData?.[field] : [];
+      const updatedList = action === 'add'
+        ? [...currentList, movieId]
+        : currentList.filter((id: string) => id !== movieId);
+
+      await updateDoc(userDocRef, {
+        [field]: updatedList
+      });
+      setTvShowStatuses((prevStatus) => ({
+        ...prevStatus,
+        [field]: action === 'add',
+      }));
     }
   };
 
-  const handleFavoritesClick = () => {
-    if (!tvShow) return;
-    if (favorites.includes(tvShow.id)) {
-      dispatch(removeTvShowFromFavorites(tvShow.id));
-    } else {
-      dispatch(addTvShowToFavorites(tvShow.id));
-    }
+  const movieId = id || '';
+  const addedToWatchlist = TvShowWatchlist.includes(movieId);
+  const addedToFavorites = TvShowFavorites.includes(movieId);
+  const addedToLists = TvShowLists.includes(movieId);
+
+
+  const toggleWatchlist = async () => {
+    const action = TvShowStatuses.watchlist ? 'remove' : 'add';
+    dispatch(action === 'add' ? addTvShowToWatchlist(movieId) : removeTvShowFromWatchlist(movieId));
+    await updateMovieStatusInFirestore(movieId, 'watchlist', action);
   };
 
-  const handleListsClick = () => {
-    if (!tvShow) return;
-    if (lists.includes(tvShow.id)) {
-      dispatch(removeTvShowFromLists(tvShow.id));
-    } else {
-      dispatch(addTvShowToLists(tvShow.id));
-    }
+  const toggleFavorites = async () => {
+    const action = TvShowStatuses.favorites ? 'remove' : 'add';
+    dispatch(action === 'add' ? addTvShowToFavorites(movieId) : removeTvShowFromFavorites(movieId));
+    await updateMovieStatusInFirestore(movieId, 'favorites', action);
   };
+
+  const toggleLists = async () => {
+    const action = TvShowStatuses.lists ? 'remove' : 'add';
+    dispatch(action === 'add' ? addTvShowToLists(movieId) : removeMovieFromLists(movieId));
+    await updateMovieStatusInFirestore(movieId, 'lists', action);
+  };
+
+  useEffect(() => {
+    const fetchUserMovieStatus = async () => {
+      if (user) {
+        const userDocRef = doc(getFirestore(), "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+  
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          const watchlistStatus = data?.watchlist || [];
+          const favoritesStatus = data?.favorites || [];
+          const listsStatus = data?.lists || [];
+  
+          // Update the state with the status from Firestore
+          setTvShowStatuses({
+            watchlist: watchlistStatus.includes(movieId),
+            favorites: favoritesStatus.includes(movieId),
+            lists: listsStatus.includes(movieId)
+          });
+        }
+      }
+    };
+  
+    fetchUserMovieStatus();
+  }, [user, movieId]);
 
   return (
     <>
@@ -193,9 +245,15 @@ const TvDetailPage: FC = () => {
               <button className='bg-[#032541] font-bold rounded-full p-3'>Your Vibe <span>3</span> | <span>73</span></button>
             </div>
             {/* button */}
-            <button className='bg-[#032541] rounded-full mx-2' data-tooltip-id="my-tooltip" data-tooltip-content="Add to list"><ListBulletIcon className='h-10 w-10 p-2 text-white' /></button>
-            <button className='bg-[#032541] rounded-full mx-2' data-tooltip-id="my-tooltip" data-tooltip-content="Mark as favorite"><HeartIcon className='h-10 w-10 p-2 text-white' /></button>
-            <button className='bg-[#032541] rounded-full mx-2' data-tooltip-id="my-tooltip" data-tooltip-content="Add to your watchlist"><BookmarkIcon className='h-10 w-10 p-2 text-white' /></button>
+            <button onClick={toggleLists} className={`icon-button ${TvShowStatuses.lists ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Add to list">
+              <ListBulletIcon className='h-10 w-10 p-2 text-white' />
+            </button>
+            <button onClick={toggleFavorites} className={`icon-button ${TvShowStatuses.favorites ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Mark as favorite">
+              <HeartIcon className='h-10 w-10 p-2 text-white' />
+            </button>
+            <button onClick={toggleWatchlist} className={`icon-button ${TvShowStatuses.watchlist ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Add to your watchlist">
+              <BookmarkIcon className='h-10 w-10 p-2 text-white' />
+            </button>
             <Tooltip id="my-tooltip" />
             {/* watch button */}
             <div className='flex'>
@@ -259,19 +317,19 @@ const TvDetailPage: FC = () => {
       <div className='flex flex-col md:flex-row justify-between mx-5'>
 
         <div className='flex overflow-x-auto scrollbar-hide w-full mx-6'>
-          <Cast name={'Ben Whishaw'} type={'Sam Young'} image={img1}/>
-          <Cast name={'Andrew Buchan'} type={'Wallace'} image={img2}/>
-          <Cast name={'Andrew Koji'} type={'Jason'} image={img3}/>
-          <Cast name={'Sam Troughton'} type={'Stephen Yarrick'} image={img4}/>
-          <Cast name={'Sarah Lancashire'} type={'Mrs. Reed'} image={img5}/>
-          <Cast name={'Keira Knightley'} type={'Helen Webb'} image={img6}/>
-          <Cast name={'Omari Douglas'} type={'Michael'} image={img7}/>
-          <Cast name={'Ella Lily Hyland'} type={'Williams'} image={img8}/>
+          <Cast name={'Ben Whishaw'} type={'Sam Young'} image={img1} />
+          <Cast name={'Andrew Buchan'} type={'Wallace'} image={img2} />
+          <Cast name={'Andrew Koji'} type={'Jason'} image={img3} />
+          <Cast name={'Sam Troughton'} type={'Stephen Yarrick'} image={img4} />
+          <Cast name={'Sarah Lancashire'} type={'Mrs. Reed'} image={img5} />
+          <Cast name={'Keira Knightley'} type={'Helen Webb'} image={img6} />
+          <Cast name={'Omari Douglas'} type={'Michael'} image={img7} />
+          <Cast name={'Ella Lily Hyland'} type={'Williams'} image={img8} />
         </div>
 
         <div className='md:w-1/3 w-full shadow-left rounded-xl  p-4  dark:border-cyan-400  mt-10 dark:bg-gray-900 md:mt-0'>
-        {/* play button */}
-        <div className='flex justify-between'>
+          {/* play button */}
+          <div className='flex justify-between'>
             <div
               data-tooltip-id='my-tooltip'
               data-tooltip-content={!paidStatus ? 'Subscribe for Watch' : ''}
@@ -291,32 +349,32 @@ const TvDetailPage: FC = () => {
             </a>
           </div>
 
-{/* Social Link */}
+          {/* Social Link */}
           <div className='mt-5'>
-          <a href="https://twitter.com" target='_blank'><i className="fa-brands fa-twitter text-2xl mx-3 cursor-pointer dark:text-cyan-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Twitter"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.instagram.com" target='_blank'><i className="fa-brands fa-instagram text-2xl mx-3 cursor-pointer dark:text-pink-500" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Instagram"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.justwatch.com/pk/tv-show/secret-level" target='_blank'><i className="fa-solid fa-play text-2xl mx-3 cursor-pointer dark:text-yellow-300" data-tooltip-id="my-tooltip" data-tooltip-content="Visit JustWatch"></i></a>
-          <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
-          <a href="https://www.amazon.com/dp/B0DJPRYRDL" target='_blank'><i className="fa-solid fa-link text-2xl mx-3 cursor-pointer dark:text-green-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Homepage"></i></a>
-          <Tooltip id='my-tooltip'/>
+            <a href="https://twitter.com" target='_blank'><i className="fa-brands fa-twitter text-2xl mx-3 cursor-pointer dark:text-cyan-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Twitter"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.instagram.com" target='_blank'><i className="fa-brands fa-instagram text-2xl mx-3 cursor-pointer dark:text-pink-500" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Instagram"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.justwatch.com/pk/tv-show/secret-level" target='_blank'><i className="fa-solid fa-play text-2xl mx-3 cursor-pointer dark:text-yellow-300" data-tooltip-id="my-tooltip" data-tooltip-content="Visit JustWatch"></i></a>
+            <span className='border-r border-black dark:border-cyan-400 relative bottom-1'></span>
+            <a href="https://www.amazon.com/dp/B0DJPRYRDL" target='_blank'><i className="fa-solid fa-link text-2xl mx-3 cursor-pointer dark:text-green-400" data-tooltip-id="my-tooltip" data-tooltip-content="Visit Homepage"></i></a>
+            <Tooltip id='my-tooltip' />
           </div>
 
-{/* facts, Status */}
+          {/* facts, Status */}
           <div className='mt-5 mx-2 font-bold text-sm'>
-          <p>Facts</p>
-          <p>Status</p>
-          <span className='font-light'>Returning Series</span>
+            <p>Facts</p>
+            <p>Status</p>
+            <span className='font-light'>Returning Series</span>
 
-          <p className='mt-5'>Network</p>
-          <img src={prime} className='w-28' alt="" />
+            <p className='mt-5'>Network</p>
+            <img src={prime} className='w-28' alt="" />
 
-          <p className='mt-5'>Type</p>
-          <span className='font-light'>Scripted</span>
+            <p className='mt-5'>Type</p>
+            <span className='font-light'>Scripted</span>
 
-          <p className='mt-5'>Original Language</p>
-          <span className='font-light'>English</span>
+            <p className='mt-5'>Original Language</p>
+            <span className='font-light'>English</span>
           </div>
         </div>
 

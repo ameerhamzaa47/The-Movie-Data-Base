@@ -3,29 +3,40 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firest
 import { auth, db } from '../Auth/Firebase';
 
 interface TvShowState {
-  watchlist: string[];
-  favorites: string[];
-  lists: string[];
+  TvShowWatchlist: string[];
+  TvShowFavorites: string[];
+  TvShowLists: string[];
 }
 
 const initialState: TvShowState = {
-  watchlist: [],
-  favorites: [],
-  lists: [],
+  TvShowWatchlist: [],
+  TvShowFavorites: [],
+  TvShowLists: [],
 };
 
 // Helper function to update Firestore
-const updateFirestore = async (uid: string, collection: string, action: 'add' | 'remove', movieId: string) => {
+const updateFirestore = async (uid: string, collection: string, showId: string, isAdding: boolean) => {
   try {
     const userDocRef = doc(db, 'users', uid);
     const userDocSnap = await getDoc(userDocRef);
-    
-    if (userDocSnap.exists()) {
-      const updateData = action === 'add' 
-        ? { [collection]: arrayUnion(movieId) } 
-        : { [collection]: arrayRemove(movieId) };
 
-      await updateDoc(userDocRef, updateData);
+    if (userDocSnap.exists()) {
+      const userDocData = userDocSnap.data();
+      const currentShows = userDocData?.[collection] || [];
+
+      // If we're adding, only add if the show is not already in the list
+      if (isAdding && !currentShows.includes(showId)) {
+        await updateDoc(userDocRef, {
+          [collection]: arrayUnion(showId),
+        });
+      }
+
+      // If we're removing, only remove if the show is in the list
+      else if (!isAdding && currentShows.includes(showId)) {
+        await updateDoc(userDocRef, {
+          [collection]: arrayRemove(showId),
+        });
+      }
     } else {
       console.log('User not found');
     }
@@ -34,56 +45,71 @@ const updateFirestore = async (uid: string, collection: string, action: 'add' | 
   }
 };
 
-const TvShowSlice = createSlice({
-  name: 'TvShow',
+const tvShowSlice = createSlice({
+  name: 'tvShows',
   initialState,
   reducers: {
+    // Add TV show to Watchlist
     addTvShowToWatchlist: (state, action: PayloadAction<string>) => {
+      state.TvShowWatchlist.push(action.payload);
       const user = auth.currentUser;
       if (user) {
-        state.watchlist.push(action.payload);
-        updateFirestore(user.uid, 'watchlist', 'add', action.payload);  // Update Firestore
+        // Call the Firestore helper to add to the watchlist
+        updateFirestore(user.uid, 'TvShowWatchlist', action.payload, true); // true means 'add'
       }
     },
+
+    // Remove TV show from Watchlist
     removeTvShowFromWatchlist: (state, action: PayloadAction<string>) => {
-      state.watchlist = state.watchlist.filter(id => id !== action.payload);
+      state.TvShowWatchlist = state.TvShowWatchlist.filter(id => id !== action.payload);
       const user = auth.currentUser;
       if (user) {
-        updateFirestore(user.uid, 'watchlist', 'remove', action.payload);  // Update Firestore
+        // Call the Firestore helper to remove from the watchlist
+        updateFirestore(user.uid, 'TvShowWatchlist', action.payload, false); // false means 'remove'
       }
     },
+
+    // Add TV show to Favorites
     addTvShowToFavorites: (state, action: PayloadAction<string>) => {
+      state.TvShowFavorites.push(action.payload);
       const user = auth.currentUser;
       if (user) {
-        state.favorites.push(action.payload);
-        updateFirestore(user.uid, 'favorites', 'add', action.payload);  // Update Firestore
+        updateFirestore(user.uid, 'TvShowFavorites', action.payload, true);
       }
     },
+
+    // Remove TV show from Favorites
     removeTvShowFromFavorites: (state, action: PayloadAction<string>) => {
-      state.favorites = state.favorites.filter(id => id !== action.payload);
+      state.TvShowFavorites = state.TvShowFavorites.filter(id => id !== action.payload);
       const user = auth.currentUser;
       if (user) {
-        updateFirestore(user.uid, 'favorites', 'remove', action.payload);  // Update Firestore
+        updateFirestore(user.uid, 'TvShowFavorites', action.payload, false);
       }
     },
+
+    // Add TV show to Lists
     addTvShowToLists: (state, action: PayloadAction<string>) => {
+      state.TvShowLists.push(action.payload);
       const user = auth.currentUser;
       if (user) {
-        state.lists.push(action.payload);
-        updateFirestore(user.uid, 'lists', 'add', action.payload);  // Update Firestore
+        updateFirestore(user.uid, 'TvShowLists', action.payload, true);
       }
     },
+
+    // Remove TV show from Lists
     removeTvShowFromLists: (state, action: PayloadAction<string>) => {
-      state.lists = state.lists.filter(id => id !== action.payload);
+      state.TvShowLists = state.TvShowLists.filter(id => id !== action.payload);
       const user = auth.currentUser;
       if (user) {
-        updateFirestore(user.uid, 'lists', 'remove', action.payload);  // Update Firestore
+        updateFirestore(user.uid, 'TvShowLists', action.payload, false);
       }
     },
-    setTvShow: (state, action: PayloadAction<TvShowState>) => {
-      state.watchlist = action.payload.watchlist;
-      state.favorites = action.payload.favorites;
-      state.lists = action.payload.lists;
+
+    // Set initial state from Firestore (useful for loading data on app start)
+    setTvShows: (state, action: PayloadAction<TvShowState>) => {
+      state.TvShowWatchlist = action.payload.TvShowWatchlist;
+      state.TvShowFavorites = action.payload.TvShowFavorites;
+      state.TvShowLists = action.payload.TvShowLists;
     },
   },
 });
@@ -95,7 +121,7 @@ export const {
   removeTvShowFromFavorites,
   addTvShowToLists,
   removeTvShowFromLists,
-  setTvShow,
-} = TvShowSlice.actions;
+  setTvShows,
+} = tvShowSlice.actions;
 
-export default TvShowSlice.reducer;
+export default tvShowSlice.reducer;
