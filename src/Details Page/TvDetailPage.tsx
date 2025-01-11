@@ -245,13 +245,13 @@ const TvDetailPage: FC = () => {
               <button className='bg-[#032541] font-bold rounded-full p-3'>Your Vibe <span>3</span> | <span>73</span></button>
             </div>
             {/* button */}
-            <button onClick={toggleLists} className={`icon-button ${TvShowStatuses.lists ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Add to list">
+            <button onClick={toggleLists} className={`icon-button ${TvShowStatuses.lists ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Add to List" : "Login to add this TvShow to your list"}>
               <ListBulletIcon className='h-10 w-10 p-2 text-white' />
             </button>
-            <button onClick={toggleFavorites} className={`icon-button ${TvShowStatuses.favorites ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Mark as favorite">
+            <button onClick={toggleFavorites} className={`icon-button ${TvShowStatuses.favorites ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Mark as favorite" : "Login to add this TvShow to your favorite list"}>
               <HeartIcon className='h-10 w-10 p-2 text-white' />
             </button>
-            <button onClick={toggleWatchlist} className={`icon-button ${TvShowStatuses.watchlist ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content="Add to your watchlist">
+            <button onClick={toggleWatchlist} className={`icon-button ${TvShowStatuses.watchlist ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Add to your watchlist" : "Login to add this TvShow to your watchlist"}>
               <BookmarkIcon className='h-10 w-10 p-2 text-white' />
             </button>
             <Tooltip id="my-tooltip" />
@@ -384,4 +384,3 @@ const TvDetailPage: FC = () => {
 }
 
 export default TvDetailPage;
-

@@ -1,4 +1,8 @@
 import { FC, useState, useEffect } from 'react'
+
+interface Item {
+  title: string;
+}
 import logo from '../assets/image/Logo.png'
 import Add from '../assets/image/AddMovies.png'
 import { Link } from 'react-router-dom';
@@ -12,14 +16,22 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
 import ThemeToggle from './ThemeToggle';
 import profileIcon from '../assets/image/Profile.png'
 import Notification from '../IDB Data/Notification';
+import { useSearch } from './searchContext';
 
 const Header: FC = () => {
+  const { setSearchQuery } = useSearch();
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [submenuMovies, setSubmenuMovies] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
   const [submenuTVShows, setSubmenuTVShows] = useState(false);
   const [submenuPeople, setSubmenuPeople] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [adimnId, setAdminId] = useState<number | null>(null);
+  const [allData, setAllData] = useState<{ movies: any[]; tvShows: any[] }>({
+    movies: [],
+    tvShows: [],
+  });
 
   const [user] = useAuthState(auth);
   const Navigate = useNavigate();
@@ -52,6 +64,40 @@ const Header: FC = () => {
     } catch (error) {
       toast.error('Error logging out');
     }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [moviesResponse, tvShowsResponse] = await Promise.all([
+          fetch('http://localhost:5000/Movies'),
+          fetch('http://localhost:5000/TVShows'),
+        ]);
+
+        const movies = await moviesResponse.json();
+        const tvShows = await tvShowsResponse.json();
+
+        setAllData({ movies, tvShows });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleEnterClick = (e: any) => {
+    if (e.key === 'Enter') {
+      setSearchQuery(searchInput);
+      Navigate(`/search?query=${searchInput}`);
+    }
+  };
+
+
+  const handleItemClick = (item: Item) => {
+    setSearchQuery(item.title);
+    setSearchInput(item.title);
+    Navigate(`/search?query=${item.title}`);
   };
   
 
@@ -197,6 +243,44 @@ const Header: FC = () => {
         }
         <div className='hidden md:flex items-center mx-5 text-white'>
           <ThemeToggle />
+        </div>
+        <div className='ml-2 md:-ml-2 flex items-center mr-4 text-white'>
+          {!searchOpen ? (
+            <i className="fa-solid fa-magnifying-glass text-2xl cursor-pointer text-cyan-500"
+              onClick={() => setSearchOpen(!searchOpen)} ></i>
+          ) : <i className="fa-solid fa-x text-xl cursor-pointer"
+            onClick={() => setSearchOpen(!searchOpen)}></i>}
+          {searchOpen && (
+            <>
+              <input
+                type="search"
+                className="absolute top-16 w-full h-12 z-30 px-4 right-0 bg-white text-black"
+                placeholder="Search for a movie, TV show..."
+                value={searchInput}
+                onKeyPress={handleEnterClick}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+
+              {/* Dropdown Suggestions */}
+              {searchInput.length > 0 && (
+  <div className="absolute top-14 left-0 right-0 bg-white border-t border-gray-400 dark:bg-[#1a1a1a] text-gray-800 dark:text-white p-3 rounded-sm shadow-xl transform transition-all duration-300 ease-in-out max-h-56 overflow-y-auto">
+    <ul>
+      {[...allData.movies, ...allData.tvShows]
+        .filter((item) => (item.title || item.name).toLowerCase().includes(searchInput.toLowerCase()))
+        .map((item, index) => (
+          <li
+            key={index}
+            onClick={() => handleItemClick(item)}
+            className="py-2 px-4 hover:bg-teal-100 dark:hover:bg-teal-900 cursor-pointer"
+          >
+            {item.title || item.name}
+          </li>
+        ))}
+    </ul>
+  </div>
+)}
+            </>
+          )}
         </div>
       </div>
     </header>

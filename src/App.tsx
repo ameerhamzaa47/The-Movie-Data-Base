@@ -20,7 +20,8 @@ import Profile from './Component/Profile'
 import Admin from './Admin Pannel/Admin'
 import UpdateMovie from './Admin Pannel/UpdateMovie'
 import PaymentPage from './Component/PaymentPage'
-
+import SearchComponent from './Component/SearchComponent'
+import { SearchProvider } from './Component/searchContext'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
     <ThemeProvider>
     <BrowserRouter>
     <Layout>
+      <SearchProvider>
     <ErrorBoundary>
       <Header/>
       <Routes>
@@ -42,12 +44,14 @@ function App() {
         <Route path='/addTvShow' element={<Protected cmp={AddTVShow}/>} />
         <Route path='/payment' element={<PaymentPage/>} />
         <Route path='/u/:name' element={<Profile/>} />
+        <Route path='/search' element={<SearchComponent/>} />
         <Route path='/adminPannel' element={<Protected cmp={Admin}/>} />
         <Route path='/update/:id' element={<UpdateMovie/>} />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
       <ToastContainer />
       </ErrorBoundary>
+      </SearchProvider>
     </Layout>
     </BrowserRouter>
     </ThemeProvider>

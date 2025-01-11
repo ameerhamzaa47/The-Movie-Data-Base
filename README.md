@@ -1,50 +1,128 @@
-# React + TypeScript + Vite
+# The Movie Database (TMDB)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
-Currently, two official plugins are available:
+## Introduction
+The Movie Database (TMDB) is a web application that allows users to browse, search, and manage a collection of movies and TV shows. Users can add movies to their watchlist, mark favorites, and leave comments and reviews.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Browse and search for movies and TV shows
+- View detailed information about movies and TV shows
+- Add movies and TV shows to watchlist and favorites
+- Leave comments and reviews
+- Admin panel for managing movies and TV shows
+- User authentication and profile management
 
-## Expanding the ESLint configuration
+## Installation
+To get started with the project, follow these steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/your-username/the-movie-database.git
+  cd the-movie-database
+  ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Install dependencies:
+  ```bash
+  npm install
+  ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+3. Set up environment variables:
+  Create a `.env` file in the root directory and add the following:
+  ```
+  VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+  ```
+
+4. Start the development server:
+  ```bash
+  npm run both
+  ```
+
+## Usage
+Once the development server is running, you can access the application at `http://localhost:3000`.
+
+### Admin Panel
+To access the admin panel, navigate to `http://localhost:3000/adminPannel`. Here, you can add, update, and delete movies and TV shows.
+
+### User Authentication
+Users can register, log in, and manage their profiles. Authentication is handled using Firebase.
+
+## Project Structure
+The project structure is as follows:
+```
+/src
+  ├── Admin Pannel
+  │   ├── addMovies.tsx
+  │   ├── addTvShow.tsx
+  │   ├── Admin.tsx
+  │   ├── UpdateMovie.tsx
+  │   └── UpdateTVShow.tsx
+  ├── Auth
+  │   ├── Firebase.tsx
+  │   ├── Forget_Password.tsx
+  │   ├── Login.tsx
+  │   └── Register.tsx
+  ├── Component
+  │   ├── Discussion.tsx
+  │   ├── Footer.tsx
+  │   ├── Header.tsx
+  │   ├── Home.tsx
+  │   ├── Layout.tsx
+  │   ├── Movie.tsx
+  │   ├── PaymentPage.tsx
+  │   ├── Profile.tsx
+  │   ├── Protected.tsx
+  │   ├── RatingBar.tsx
+  │   ├── ThemeToggle.tsx
+  │   ├── Trailer.tsx
+  │   └── NotFoundPage.tsx
+  ├── Context
+  │   └── ThemeProvider.tsx
+  ├── Details Page
+  │   ├── MDetailPage.tsx
+  │   └── TvDetailPage.tsx
+  ├── IDB Data
+  │   ├── IDB.tsx
+  │   └── MovieData.json
+  ├── Reducer
+  │   ├── CommentsSlice.tsx
+  │   ├── movieSlice.tsx
+  │   └── TvShowSlice.tsx
+  ├── Store
+  │   └── store.tsx
+  ├── App.css
+  ├── App.tsx
+  ├── index.css
+  ├── main.tsx
+  └── vite-env.d.ts
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## API Endpoints
+The project uses a JSON server to serve movie and TV show data. The API endpoints are as follows:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- `GET /Movies` - Retrieve all movies
+- `GET /Movies/:id` - Retrieve a specific movie by ID
+- `POST /Movies` - Add a new movie
+- `PUT /Movies/:id` - Update an existing movie
+- `DELETE /Movies/:id` - Delete a movie
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Contributing
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add new feature'`)
+5. Push to the branch (`git push origin feature-branch`)
+6. Open a pull request
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

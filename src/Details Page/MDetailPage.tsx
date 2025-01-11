@@ -268,13 +268,13 @@ const updateMovieStatusInFirestore = async (movieId: string, field: string, acti
               <button className='bg-[#032541] font-bold rounded-full p-3'>Your Vibe <span>3</span> | <span>73</span></button>
             </div>
             {/* button */}
-            <button onClick={toggleLists} data-tooltip-id="my-tooltip" data-tooltip-content="Add to List" className={`icon-button ${movieStatuses.lists ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
+            <button onClick={toggleLists} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Add to List" : "Login to add this movie to your list"} className={`icon-button ${movieStatuses.lists ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
               <ListBulletIcon className="h-10 w-10 p-2 text-white" />
             </button>
-            <button onClick={toggleFavorites} data-tooltip-id="my-tooltip" data-tooltip-content="Mark as favorite" className={`icon-button ${movieStatuses.favorites ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
+            <button onClick={toggleFavorites} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Mark as favorite" : "Login to add this movie to your favorite list"} className={`icon-button ${movieStatuses.favorites ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
               <HeartIcon className="h-10 w-10 p-2 text-white" />
             </button>
-            <button onClick={toggleWatchlist} data-tooltip-id="my-tooltip" data-tooltip-content="Add to your watchlist" className={`icon-button ${movieStatuses.watchlist ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
+            <button onClick={toggleWatchlist} data-tooltip-id="my-tooltip" data-tooltip-content={user ? "Add to your watchlist" : "Login to add this movie to your watchlist"} className={`icon-button ${movieStatuses.watchlist ? 'bg-red-500' : 'bg-[#032541]'} rounded-full mx-2`}>
               <BookmarkIcon className="h-10 w-10 p-2 text-white" />
             </button>
             <Tooltip id="my-tooltip" />
@@ -361,7 +361,7 @@ const updateMovieStatusInFirestore = async (movieId: string, field: string, acti
               <PlayIcon className='w-5' />
               {movies.length > 0 && (
                 paidStatus ? (
-                  <button onClick={() => handleVideoClick(movies[0].videoUrl)} className='font-semibold'>Play Now</button>
+                  <button onClick={() => handleVideoClick(movies[0].movieUrl)} className='font-semibold'>Play Now</button>
                 ) : (
                   <Link to={'/Payment'} className='font-semibold mt-1'>Subscribe Now</Link>
                 )
